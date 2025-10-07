@@ -54,6 +54,7 @@ class VetMedProTester:
         self.test_vet_id = None
         self.test_consultation_id = None
         self.test_session_id = None
+        self.test_vet_data = generate_test_vet_data()  # Generate unique test data
         self.results = {
             "passed": 0,
             "failed": 0,
