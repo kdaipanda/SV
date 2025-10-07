@@ -142,8 +142,8 @@ class VetMedProTester:
 
         try:
             login_data = {
-                "email": TEST_VET_DATA["email"],
-                "cedula_profesional": TEST_VET_DATA["cedula_profesional"]
+                "email": self.test_vet_data["email"],
+                "cedula_profesional": self.test_vet_data["cedula_profesional"]
             }
             
             async with self.session.post(
