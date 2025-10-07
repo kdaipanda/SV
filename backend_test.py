@@ -386,10 +386,12 @@ class VetMedProTester:
         try:
             # First, simulate membership activation by directly updating the vet
             # This simulates what would happen after a successful payment
+            from datetime import datetime, timezone
+            future_date = datetime.now(timezone.utc).replace(month=12, day=31, year=2025)
             membership_data = {
                 "membership_type": "basic",
                 "consultations_remaining": 10,
-                "membership_expires": "2025-02-28T00:00:00Z"
+                "membership_expires": future_date.isoformat()
             }
             
             # We'll use MongoDB directly to simulate membership activation
