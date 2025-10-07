@@ -509,7 +509,7 @@ class VetMedProTester:
             # Consultation system tests
             await self.test_create_consultation()
             await self.test_consultation_history()
-            await self.test_llm_integration_mock()
+            await self.test_llm_integration_with_membership()
             
             # Database tests
             await self.test_database_persistence()
