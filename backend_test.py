@@ -18,12 +18,12 @@ API_BASE = f"{BASE_URL}/api"
 
 # Test data for Mexican veterinary professionals (will be generated dynamically)
 def generate_test_vet_data():
-    unique_id = uuid.uuid4().hex[:8]
+    unique_id = str(uuid.uuid4().int)[:8]  # Generate numeric unique ID
     return {
         "nombre": "Dr. María Elena Rodríguez Hernández",
         "email": f"maria.rodriguez.{unique_id}@veterinaria.mx",
         "telefono": "+52 55 1234 5678",
-        "cedula_profesional": f"1234{unique_id[:4]}",  # Valid format for Mexican veterinary license
+        "cedula_profesional": f"1234{unique_id}",  # Valid format for Mexican veterinary license (all digits, >6 chars)
         "especialidad": "Medicina Interna de Pequeñas Especies",
         "años_experiencia": 8,
         "institucion": "Universidad Nacional Autónoma de México (UNAM)"
