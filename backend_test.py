@@ -398,15 +398,21 @@ class VetMedProTester:
             from motor.motor_asyncio import AsyncIOMotorClient
             import os
             
-            # Connect to MongoDB
-            mongo_client = AsyncIOMotorClient(os.getenv("MONGO_URL", "mongodb://localhost:27017"))
-            db = mongo_client[os.getenv("DB_NAME", "vetmed_platform")]
+            # Connect to MongoDB using the same settings as the backend
+            mongo_url = "mongodb://localhost:27017"  # From backend/.env
+            db_name = "test_database"  # From backend/.env
+            mongo_client = AsyncIOMotorClient(mongo_url)
+            db = mongo_client[db_name]
             
             # Update veterinarian with membership
-            await db.veterinarians.update_one(
+            update_result = await db.veterinarians.update_one(
                 {"id": self.test_vet_id},
                 {"$set": membership_data}
             )
+            
+            if update_result.matched_count == 0:
+                self.log_result("LLM Integration", False, "Failed to update veterinarian membership")
+                return False
             
             # Now create a consultation
             consultation_request = {
