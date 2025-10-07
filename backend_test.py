@@ -111,13 +111,13 @@ class VetMedProTester:
         try:
             async with self.session.post(
                 f"{API_BASE}/auth/register",
-                json=TEST_VET_DATA,
+                json=self.test_vet_data,
                 headers={"Content-Type": "application/json"}
             ) as response:
                 if response.status == 200:
                     data = await response.json()
                     self.test_vet_id = data.get("id")
-                    if self.test_vet_id and data.get("cedula_profesional") == TEST_VET_DATA["cedula_profesional"]:
+                    if self.test_vet_id and data.get("cedula_profesional") == self.test_vet_data["cedula_profesional"]:
                         self.log_result("Veterinarian Registration", True, 
                                       f"Registered vet ID: {self.test_vet_id}")
                         return True
