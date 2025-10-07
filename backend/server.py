@@ -1,89 +1,546 @@
-from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
-import logging
-from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
-from typing import List
 import uuid
 from datetime import datetime, timezone
+from typing import List, Optional, Dict, Any
+from dotenv import load_dotenv
 
+from fastapi import FastAPI, HTTPException, Request, Header
+from fastapi.middleware.cors import CORSMiddleware
+from motor.motor_asyncio import AsyncIOMotorClient
+from pydantic import BaseModel, Field
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+# Load environment variables
+load_dotenv()
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# LLM and Payment integrations
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
 
-# Create the main app without a prefix
 app = FastAPI()
 
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
-
-
-# Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
-    return status_checks
-
-# Include the router in the main app
-app.include_router(api_router)
-
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# Database setup
+client = AsyncIOMotorClient(os.getenv("MONGO_URL"))
+db = client[os.getenv("DB_NAME", "vetmed_platform")]
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+# LLM Configuration
+EMERGENT_LLM_KEY = os.getenv("EMERGENT_LLM_KEY")
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
+
+# Membership packages (server-side only for security)
+MEMBERSHIP_PACKAGES = {
+    "basic": {"name": "Básica", "price": 299.00, "consultations": 10, "currency": "mxn"},
+    "professional": {"name": "Profesional", "price": 599.00, "consultations": 25, "currency": "mxn"},
+    "premium": {"name": "Premium", "price": 999.00, "consultations": "unlimited", "currency": "mxn"}
+}
+
+# Animal categories with specialized prompts
+ANIMAL_CATEGORIES = {
+    "pequeñas": {
+        "name": "Pequeñas Especies (Perros y Gatos)",
+        "prompt": "Eres un veterinario especialista en pequeñas especies (perros y gatos) con amplia experiencia clínica. Proporciona diagnósticos diferenciales, planes de tratamiento y recomendaciones basadas en evidencia científica."
+    },
+    "produccion": {
+        "name": "Animales de Producción",
+        "prompt": "Eres un veterinario especialista en animales de producción (bovinos, porcinos, aves) con experiencia en medicina veterinaria productiva. Enfócate en aspectos sanitarios, productivos y económicos."
+    },
+    "equinos": {
+        "name": "Equinos",
+        "prompt": "Eres un veterinario especialista en medicina equina con experiencia en caballos de deporte, trabajo y reproducción. Considera aspectos de rendimiento y bienestar equino."
+    },
+    "exoticos": {
+        "name": "Exóticos y Silvestres",
+        "prompt": "Eres un veterinario especialista en animales exóticos y silvestres con conocimiento en especies no convencionales, reptiles, aves exóticas y fauna silvestre."
+    }
+}
+
+# Pydantic models
+class VeterinarianRegistration(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    nombre: str
+    email: str
+    telefono: str
+    cedula_profesional: str
+    especialidad: str
+    años_experiencia: int
+    institucion: str
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    verified: bool = False
+
+class Veterinarian(BaseModel):
+    id: str
+    nombre: str
+    email: str
+    telefono: str
+    cedula_profesional: str
+    especialidad: str
+    años_experiencia: int
+    institucion: str
+    created_at: str
+    verified: bool
+    membership_type: Optional[str] = None
+    consultations_remaining: Optional[int] = None
+    membership_expires: Optional[str] = None
+
+class LoginRequest(BaseModel):
+    email: str
+    cedula_profesional: str
+
+class ConsultationData(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    veterinarian_id: str
+    category: str
+    
+    # Stage 1: Initial questionnaire
+    especie: str
+    raza: str
+    edad: str
+    peso: str
+    motivo_consulta: str
+    sintomas: str
+    duracion_sintomas: str
+    tratamientos_previos: str
+    historia_clinica: str
+    
+    # Stage 2: Clinical observations
+    parametros_vitales: Optional[str] = None
+    imagenes_videos: Optional[List[str]] = None
+    laboratorio_estudios: Optional[str] = None
+    ambiente_manejo: Optional[str] = None
+    notas_adicionales: Optional[str] = None
+    
+    # Stage 3: AI Analysis
+    ai_analysis: Optional[str] = None
+    diagnosticos_diferenciales: Optional[List[str]] = None
+    plan_tratamiento: Optional[str] = None
+    estudios_recomendados: Optional[str] = None
+    bibliografia: Optional[List[str]] = None
+    
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    status: str = "draft"  # draft, in_progress, completed
+
+class ConsultationRequest(BaseModel):
+    veterinarian_id: str
+    category: str
+    consultation_data: Dict[str, Any]
+
+class AIAnalysisRequest(BaseModel):
+    consultation_id: str
+
+class PaymentRequest(BaseModel):
+    package_id: str
+    origin_url: str
+
+class PaymentTransaction(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    veterinarian_id: Optional[str] = None
+    package_id: str
+    amount: float
+    currency: str
+    session_id: str
+    payment_status: str = "pending"
+    status: str = "initiated"
+    metadata: Optional[Dict[str, Any]] = None
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+# Helper functions
+def prepare_for_mongo(data):
+    """Convert datetime objects to ISO strings for MongoDB storage"""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, datetime):
+                data[key] = value.isoformat()
+    return data
+
+async def verify_veterinarian_membership(veterinarian_id: str):
+    """Check if veterinarian has active membership and consultations remaining"""
+    vet = await db.veterinarians.find_one({"id": veterinarian_id})
+    if not vet:
+        raise HTTPException(status_code=404, detail="Veterinario no encontrado")
+    
+    if not vet.get("membership_type"):
+        raise HTTPException(status_code=403, detail="Membresía requerida para realizar consultas")
+    
+    # Check if membership is expired
+    if vet.get("membership_expires"):
+        expiry = datetime.fromisoformat(vet["membership_expires"])
+        if expiry < datetime.now(timezone.utc):
+            raise HTTPException(status_code=403, detail="Membresía expirada")
+    
+    # Check consultation limit for non-premium members
+    if vet["membership_type"] != "premium":
+        remaining = vet.get("consultations_remaining", 0)
+        if remaining <= 0:
+            raise HTTPException(status_code=403, detail="Consultas agotadas en tu membresía actual")
+    
+    return vet
+
+# API Routes
+
+@app.get("/")
+async def root():
+    return {"message": "VetMed Pro - Plataforma de Consultoría Veterinaria"}
+
+# Authentication endpoints
+@app.post("/api/auth/register", response_model=Veterinarian)
+async def register_veterinarian(registration: VeterinarianRegistration):
+    """Register a new veterinarian"""
+    
+    # Check if email or cedula already exists
+    existing = await db.veterinarians.find_one({
+        "$or": [
+            {"email": registration.email},
+            {"cedula_profesional": registration.cedula_profesional}
+        ]
+    })
+    
+    if existing:
+        raise HTTPException(status_code=400, detail="Email o cédula profesional ya registrados")
+    
+    # Validate Mexican veterinary license format (basic validation)
+    if not registration.cedula_profesional.isdigit() or len(registration.cedula_profesional) < 6:
+        raise HTTPException(status_code=400, detail="Formato de cédula profesional inválido")
+    
+    vet_data = prepare_for_mongo(registration.dict())
+    await db.veterinarians.insert_one(vet_data)
+    
+    return Veterinarian(**vet_data)
+
+@app.post("/api/auth/login", response_model=Veterinarian)
+async def login_veterinarian(login_request: LoginRequest):
+    """Login veterinarian"""
+    vet = await db.veterinarians.find_one({
+        "email": login_request.email,
+        "cedula_profesional": login_request.cedula_profesional
+    })
+    
+    if not vet:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+    
+    return Veterinarian(**vet)
+
+@app.get("/api/veterinarians/{vet_id}", response_model=Veterinarian)
+async def get_veterinarian(vet_id: str):
+    """Get veterinarian profile"""
+    vet = await db.veterinarians.find_one({"id": vet_id})
+    if not vet:
+        raise HTTPException(status_code=404, detail="Veterinario no encontrado")
+    
+    return Veterinarian(**vet)
+
+# Consultation endpoints
+@app.get("/api/animal-categories")
+async def get_animal_categories():
+    """Get available animal categories"""
+    return {"categories": ANIMAL_CATEGORIES}
+
+@app.post("/api/consultations", response_model=ConsultationData)
+async def create_consultation(consultation_request: ConsultationRequest):
+    """Create a new consultation (Stage 1: Initial questionnaire)"""
+    
+    # Verify veterinarian membership
+    await verify_veterinarian_membership(consultation_request.veterinarian_id)
+    
+    consultation = ConsultationData(
+        veterinarian_id=consultation_request.veterinarian_id,
+        category=consultation_request.category,
+        **consultation_request.consultation_data
+    )
+    
+    consultation_data = prepare_for_mongo(consultation.dict())
+    await db.consultations.insert_one(consultation_data)
+    
+    return consultation
+
+@app.put("/api/consultations/{consultation_id}/observations")
+async def update_consultation_observations(consultation_id: str, observations: Dict[str, Any]):
+    """Update consultation with clinical observations (Stage 2)"""
+    
+    result = await db.consultations.update_one(
+        {"id": consultation_id},
+        {
+            "$set": {
+                **observations,
+                "status": "in_progress",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }
+        }
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Consulta no encontrada")
+    
+    return {"message": "Observaciones clínicas actualizadas"}
+
+@app.post("/api/consultations/{consultation_id}/analyze")
+async def analyze_consultation(consultation_id: str):
+    """Generate AI analysis for consultation (Stage 3)"""
+    
+    consultation = await db.consultations.find_one({"id": consultation_id})
+    if not consultation:
+        raise HTTPException(status_code=404, detail="Consulta no encontrada")
+    
+    # Verify veterinarian membership before processing
+    vet = await verify_veterinarian_membership(consultation["veterinarian_id"])
+    
+    # Get category-specific prompt
+    category = consultation["category"]
+    if category not in ANIMAL_CATEGORIES:
+        raise HTTPException(status_code=400, detail="Categoría de animal inválida")
+    
+    category_info = ANIMAL_CATEGORIES[category]
+    
+    # Prepare consultation data for AI analysis
+    consultation_text = f"""
+    CONSULTA VETERINARIA - {category_info['name']}
+    
+    INFORMACIÓN DEL PACIENTE:
+    - Especie: {consultation.get('especie', 'No especificada')}
+    - Raza: {consultation.get('raza', 'No especificada')}
+    - Edad: {consultation.get('edad', 'No especificada')}
+    - Peso: {consultation.get('peso', 'No especificado')}
+    
+    MOTIVO DE CONSULTA:
+    {consultation.get('motivo_consulta', 'No especificado')}
+    
+    SÍNTOMAS PRINCIPALES:
+    {consultation.get('sintomas', 'No especificados')}
+    
+    DURACIÓN DE SÍNTOMAS:
+    {consultation.get('duracion_sintomas', 'No especificada')}
+    
+    TRATAMIENTOS PREVIOS:
+    {consultation.get('tratamientos_previos', 'Ninguno')}
+    
+    HISTORIA CLÍNICA RELEVANTE:
+    {consultation.get('historia_clinica', 'No especificada')}
+    
+    OBSERVACIONES CLÍNICAS:
+    - Parámetros vitales: {consultation.get('parametros_vitales', 'No registrados')}
+    - Ambiente y manejo: {consultation.get('ambiente_manejo', 'No especificado')}
+    - Estudios de laboratorio: {consultation.get('laboratorio_estudios', 'No realizados')}
+    - Notas adicionales: {consultation.get('notas_adicionales', 'Ninguna')}
+    
+    Por favor proporciona:
+    1. Diagnósticos diferenciales (mínimo 3)
+    2. Plan de tratamiento detallado
+    3. Estudios complementarios recomendados
+    4. Pronóstico
+    5. Referencias bibliográficas relevantes
+    """
+    
+    try:
+        # Initialize LLM chat for veterinary consultation
+        session_id = f"vet_consultation_{consultation_id}"
+        system_message = f"{category_info['prompt']} Proporciona un análisis profesional, detallado y basado en evidencia científica."
+        
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("anthropic", "claude-4-sonnet-20250514")
+        
+        user_message = UserMessage(text=consultation_text)
+        ai_response = await chat.send_message(user_message)
+        
+        # Update consultation with AI analysis
+        analysis_data = {
+            "ai_analysis": ai_response,
+            "status": "completed",
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.consultations.update_one(
+            {"id": consultation_id},
+            {"$set": analysis_data}
+        )
+        
+        # Deduct consultation from veterinarian's remaining count (if not premium)
+        if vet["membership_type"] != "premium":
+            remaining = vet.get("consultations_remaining", 0)
+            await db.veterinarians.update_one(
+                {"id": consultation["veterinarian_id"]},
+                {"$set": {"consultations_remaining": max(0, remaining - 1)}}
+            )
+        
+        return {"analysis": ai_response, "consultation_id": consultation_id}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error en el análisis de IA: {str(e)}")
+
+@app.get("/api/consultations/{vet_id}/history")
+async def get_consultation_history(vet_id: str):
+    """Get consultation history for veterinarian"""
+    consultations = await db.consultations.find(
+        {"veterinarian_id": vet_id}
+    ).sort("created_at", -1).to_list(length=None)
+    
+    return {"consultations": consultations}
+
+@app.get("/api/consultations/{consultation_id}", response_model=ConsultationData)
+async def get_consultation(consultation_id: str):
+    """Get specific consultation"""
+    consultation = await db.consultations.find_one({"id": consultation_id})
+    if not consultation:
+        raise HTTPException(status_code=404, detail="Consulta no encontrada")
+    
+    return ConsultationData(**consultation)
+
+# Payment endpoints
+@app.get("/api/membership/packages")
+async def get_membership_packages():
+    """Get available membership packages"""
+    return {"packages": MEMBERSHIP_PACKAGES}
+
+@app.post("/api/payments/checkout/session")
+async def create_checkout_session(payment_request: PaymentRequest, request: Request):
+    """Create Stripe checkout session for membership"""
+    
+    # Validate package
+    if payment_request.package_id not in MEMBERSHIP_PACKAGES:
+        raise HTTPException(status_code=400, detail="Paquete de membresía inválido")
+    
+    package = MEMBERSHIP_PACKAGES[payment_request.package_id]
+    
+    try:
+        # Initialize Stripe checkout
+        host_url = str(request.base_url).rstrip('/')
+        webhook_url = f"{host_url}/api/webhook/stripe"
+        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
+        
+        # Create success and cancel URLs
+        success_url = f"{payment_request.origin_url}/payment-success?session_id={{CHECKOUT_SESSION_ID}}"
+        cancel_url = f"{payment_request.origin_url}/membership"
+        
+        # Create checkout session request
+        checkout_request = CheckoutSessionRequest(
+            amount=package["price"],
+            currency=package["currency"],
+            success_url=success_url,
+            cancel_url=cancel_url,
+            metadata={
+                "package_id": payment_request.package_id,
+                "package_name": package["name"],
+                "consultations": str(package["consultations"])
+            }
+        )
+        
+        session = await stripe_checkout.create_checkout_session(checkout_request)
+        
+        # Create payment transaction record
+        transaction = PaymentTransaction(
+            package_id=payment_request.package_id,
+            amount=package["price"],
+            currency=package["currency"],
+            session_id=session.session_id,
+            metadata=checkout_request.metadata
+        )
+        
+        transaction_data = prepare_for_mongo(transaction.dict())
+        await db.payment_transactions.insert_one(transaction_data)
+        
+        return {"checkout_url": session.url, "session_id": session.session_id}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creando sesión de pago: {str(e)}")
+
+@app.get("/api/payments/checkout/status/{session_id}")
+async def get_checkout_status(session_id: str):
+    """Get Stripe checkout session status"""
+    
+    try:
+        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url="")
+        status = await stripe_checkout.get_checkout_status(session_id)
+        
+        # Update transaction status in database
+        transaction = await db.payment_transactions.find_one({"session_id": session_id})
+        if transaction:
+            update_data = {
+                "payment_status": status.payment_status,
+                "status": status.status,
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }
+            
+            await db.payment_transactions.update_one(
+                {"session_id": session_id},
+                {"$set": update_data}
+            )
+            
+            # If payment successful, update veterinarian membership
+            if status.payment_status == "paid" and not transaction.get("membership_activated"):
+                package_id = transaction["package_id"]
+                package = MEMBERSHIP_PACKAGES[package_id]
+                
+                # Calculate membership expiry (30 days from now)
+                expiry_date = datetime.now(timezone.utc).replace(day=28)  # Safe day for all months
+                if expiry_date.month == 12:
+                    expiry_date = expiry_date.replace(year=expiry_date.year + 1, month=1)
+                else:
+                    expiry_date = expiry_date.replace(month=expiry_date.month + 1)
+                
+                # Update veterinarian membership
+                membership_data = {
+                    "membership_type": package_id,
+                    "consultations_remaining": package["consultations"] if package["consultations"] != "unlimited" else 999999,
+                    "membership_expires": expiry_date.isoformat()
+                }
+                
+                # Find veterinarian by email from metadata (if available)
+                if transaction.get("veterinarian_id"):
+                    await db.veterinarians.update_one(
+                        {"id": transaction["veterinarian_id"]},
+                        {"$set": membership_data}
+                    )
+                
+                # Mark transaction as membership activated
+                await db.payment_transactions.update_one(
+                    {"session_id": session_id},
+                    {"$set": {"membership_activated": True}}
+                )
+        
+        return {
+            "status": status.status,
+            "payment_status": status.payment_status,
+            "amount_total": status.amount_total,
+            "currency": status.currency,
+            "metadata": status.metadata
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error verificando estado del pago: {str(e)}")
+
+@app.post("/api/webhook/stripe")
+async def stripe_webhook(request: Request):
+    """Handle Stripe webhooks"""
+    
+    try:
+        body = await request.body()
+        stripe_signature = request.headers.get("Stripe-Signature")
+        
+        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url="")
+        webhook_response = await stripe_checkout.handle_webhook(body, stripe_signature)
+        
+        # Process webhook event
+        if webhook_response.event_type == "checkout.session.completed":
+            session_id = webhook_response.session_id
+            
+            # Update transaction and membership as in get_checkout_status
+            # (This ensures redundancy in case frontend polling fails)
+            
+        return {"received": True}
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Webhook error: {str(e)}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
