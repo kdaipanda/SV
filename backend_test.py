@@ -84,13 +84,14 @@ class VetMedProTester:
         print()
 
     async def test_health_check(self):
-        """Test 1: Health Check - Root endpoint connectivity"""
+        """Test 1: Health Check - API connectivity via animal categories"""
         try:
-            async with self.session.get(BASE_URL) as response:
+            # Test API connectivity using a simple endpoint
+            async with self.session.get(f"{API_BASE}/animal-categories") as response:
                 if response.status == 200:
                     data = await response.json()
-                    if "VetMed Pro" in data.get("message", ""):
-                        self.log_result("Health Check", True, "Backend is accessible and responding")
+                    if "categories" in data:
+                        self.log_result("Health Check", True, "Backend API is accessible and responding")
                         return True
                     else:
                         self.log_result("Health Check", False, f"Unexpected response: {data}")
