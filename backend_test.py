@@ -374,32 +374,84 @@ class VetMedProTester:
             self.log_result("Consultation History", False, error=str(e))
             return False
 
-    async def test_llm_integration_mock(self):
-        """Test 11: LLM Integration (Mock test - check if endpoint exists)"""
-        # Since we can't create a consultation without membership, 
-        # we'll test if the analyze endpoint exists with a fake ID
+    async def test_llm_integration_with_membership(self):
+        """Test 11: LLM Integration with Claude 4 Sonnet (Full workflow test)"""
+        if not self.test_vet_id:
+            self.log_result("LLM Integration", False, "No vet ID available")
+            return False
+
         try:
-            fake_consultation_id = str(uuid.uuid4())
+            # First, simulate membership activation by directly updating the vet
+            # This simulates what would happen after a successful payment
+            membership_data = {
+                "membership_type": "basic",
+                "consultations_remaining": 10,
+                "membership_expires": "2025-02-28T00:00:00Z"
+            }
+            
+            # We'll use MongoDB directly to simulate membership activation
+            # In a real scenario, this would happen via Stripe webhook
+            import asyncio
+            from motor.motor_asyncio import AsyncIOMotorClient
+            import os
+            
+            # Connect to MongoDB
+            mongo_client = AsyncIOMotorClient(os.getenv("MONGO_URL", "mongodb://localhost:27017"))
+            db = mongo_client[os.getenv("DB_NAME", "vetmed_platform")]
+            
+            # Update veterinarian with membership
+            await db.veterinarians.update_one(
+                {"id": self.test_vet_id},
+                {"$set": membership_data}
+            )
+            
+            # Now create a consultation
+            consultation_request = {
+                "veterinarian_id": self.test_vet_id,
+                "category": "pequeñas",
+                "consultation_data": TEST_CONSULTATION_DATA
+            }
+            
             async with self.session.post(
-                f"{API_BASE}/consultations/{fake_consultation_id}/analyze"
+                f"{API_BASE}/consultations",
+                json=consultation_request,
+                headers={"Content-Type": "application/json"}
             ) as response:
-                if response.status == 404:
-                    # Expected - consultation not found
-                    self.log_result("LLM Integration Endpoint", True, 
-                                  "Analyze endpoint exists and validates consultation ID")
-                    return True
-                elif response.status == 403:
-                    # Also acceptable - membership required
-                    self.log_result("LLM Integration Endpoint", True, 
-                                  "Analyze endpoint exists and requires membership")
-                    return True
+                if response.status == 200:
+                    consultation_data = await response.json()
+                    consultation_id = consultation_data.get("id")
+                    
+                    if consultation_id:
+                        # Now test the LLM analysis
+                        async with self.session.post(
+                            f"{API_BASE}/consultations/{consultation_id}/analyze"
+                        ) as analyze_response:
+                            if analyze_response.status == 200:
+                                analysis_data = await analyze_response.json()
+                                if analysis_data.get("analysis") and "consultation_id" in analysis_data:
+                                    self.log_result("LLM Integration", True, 
+                                                  "Claude 4 Sonnet analysis completed successfully")
+                                    return True
+                                else:
+                                    self.log_result("LLM Integration", False, 
+                                                  f"Invalid analysis response: {analysis_data}")
+                                    return False
+                            else:
+                                error_data = await analyze_response.text()
+                                self.log_result("LLM Integration", False, 
+                                              f"Analysis failed {analyze_response.status}: {error_data}")
+                                return False
+                    else:
+                        self.log_result("LLM Integration", False, "No consultation ID returned")
+                        return False
                 else:
                     error_data = await response.text()
-                    self.log_result("LLM Integration Endpoint", False, 
-                                  f"Unexpected response {response.status}: {error_data}")
+                    self.log_result("LLM Integration", False, 
+                                  f"Consultation creation failed {response.status}: {error_data}")
                     return False
+                    
         except Exception as e:
-            self.log_result("LLM Integration Endpoint", False, error=str(e))
+            self.log_result("LLM Integration", False, error=str(e))
             return False
 
     async def test_database_persistence(self):
