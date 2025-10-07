@@ -469,8 +469,8 @@ class VetMedProTester:
             ) as response:
                 if response.status == 200:
                     data = await response.json()
-                    if (data.get("email") == TEST_VET_DATA["email"] and 
-                        data.get("cedula_profesional") == TEST_VET_DATA["cedula_profesional"]):
+                    if (data.get("email") == self.test_vet_data["email"] and 
+                        data.get("cedula_profesional") == self.test_vet_data["cedula_profesional"]):
                         self.log_result("Database Persistence", True, 
                                       "Veterinarian data correctly stored and retrieved")
                         return True
