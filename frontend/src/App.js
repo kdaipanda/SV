@@ -1060,7 +1060,7 @@ const NewConsultation = ({ setView }) => {
                     disabled={loading}
                     className="btn btn-primary btn-large"
                   >
-                    {loading ? 'Analizando...' : 'Iniciar Análisis IA'}
+                    {loading ? 'Analizando...' : 'Iniciar Análisis'}
                   </button>
                 </div>
               ) : (
