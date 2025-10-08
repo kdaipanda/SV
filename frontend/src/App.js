@@ -1188,7 +1188,7 @@ const ConsultationHistory = ({ setView }) => {
 
             {selectedConsultation.ai_analysis && (
               <div className="detail-section">
-                <h3>Análisis IA</h3>
+                <h3>Análisis Especializado</h3>
                 <div className="analysis-content">
                   <pre className="analysis-text">{selectedConsultation.ai_analysis}</pre>
                 </div>
