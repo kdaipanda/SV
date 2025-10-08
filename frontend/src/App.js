@@ -187,7 +187,7 @@ const LandingPage = ({ setView }) => {
             <div className="feature-card">
               <div className="feature-icon">🐕</div>
               <h3>Especialización por Especies</h3>
-              <p>Agentes IA especializados en pequeñas especies, producción, equinos y exóticos</p>
+              <p>Sistemas especializados en pequeñas especies, producción, equinos y exóticos</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">📋</div>
