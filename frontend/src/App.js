@@ -794,7 +794,7 @@ const NewConsultation = ({ setView }) => {
             <div className="step-indicator">
               <div className="step active">1. Cuestionario</div>
               <div className="step">2. Observaciones</div>
-              <div className="step">3. Análisis IA</div>
+              <div className="step">3. Análisis</div>
             </div>
 
             <form onSubmit={handleSubmitStep1} className="consultation-form">
@@ -952,7 +952,7 @@ const NewConsultation = ({ setView }) => {
             <div className="step-indicator">
               <div className="step completed">1. Cuestionario</div>
               <div className="step active">2. Observaciones</div>
-              <div className="step">3. Análisis IA</div>
+              <div className="step">3. Análisis</div>
             </div>
 
             <form onSubmit={handleSubmitStep2} className="consultation-form">
