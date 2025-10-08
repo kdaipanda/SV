@@ -764,7 +764,7 @@ const NewConsultation = ({ setView }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.detail || 'Error en análisis IA');
+        throw new Error(errorData.detail || 'Error en análisis');
       }
 
       const result = await response.json();
