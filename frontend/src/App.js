@@ -584,7 +584,7 @@ const Dashboard = ({ setView }) => {
               <button onClick={() => setView('new-consultation')} className="action-card">
                 <div className="action-icon">➕</div>
                 <h3>Nueva Consulta</h3>
-                <p>Iniciar análisis con IA especializada</p>
+                <p>Iniciar análisis especializado</p>
               </button>
               
               <button onClick={() => setView('consultation-history')} className="action-card">
