@@ -1360,7 +1360,7 @@ const MembershipPage = ({ setView }) => {
                   ✅ {pkg.consultations === 'unlimited' ? 'Consultas ilimitadas' : `${pkg.consultations} consultas/mes`}
                 </div>
                 <div className="feature">
-                  ✅ IA especializada por categoría
+                  ✅ Sistema especializado por categoría
                 </div>
                 <div className="feature">
                   ✅ Diagnósticos diferenciales
