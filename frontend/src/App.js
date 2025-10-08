@@ -1044,7 +1044,7 @@ const NewConsultation = ({ setView }) => {
                   <div className="analysis-icon">🤖</div>
                   <h3>¿Listo para el análisis especializado?</h3>
                   <p>
-                    Nuestro sistema de IA especializada en {categories[selectedCategory]?.name} 
+                    Nuestro sistema especializado en {categories[selectedCategory]?.name} 
                     analizará toda la información proporcionada para generar:
                   </p>
                   <ul>
