@@ -173,7 +173,7 @@ const LandingPage = ({ setView }) => {
           <div className="hero-image">
             <div className="hero-card">
               <div className="card-icon">🔬</div>
-              <h3>Análisis IA Especializado</h3>
+              <h3>Análisis Especializado</h3>
               <p>Diagnósticos diferenciales y planes de tratamiento personalizados</p>
             </div>
           </div>
