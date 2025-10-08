@@ -1415,9 +1415,9 @@ const MembershipPage = ({ setView }) => {
           <h2>¿Por qué elegir una membresía?</h2>
           <div className="info-grid">
             <div className="info-card">
-              <div className="info-icon">🤖</div>
-              <h3>IA Especializada</h3>
-              <p>Agentes virtuales entrenados específicamente para cada categoría animal</p>
+              <div className="info-icon">🔬</div>
+              <h3>Sistema Especializado</h3>
+              <p>Análisis especializados entrenados específicamente para cada categoría animal</p>
             </div>
             <div className="info-card">
               <div className="info-icon">⚡</div>
