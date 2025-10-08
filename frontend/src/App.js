@@ -192,7 +192,7 @@ const LandingPage = ({ setView }) => {
             <div className="feature-card">
               <div className="feature-icon">📋</div>
               <h3>Proceso Estructurado</h3>
-              <p>Flujo de consulta en 3 etapas: cuestionario, observaciones clínicas y análisis IA</p>
+              <p>Flujo de consulta en 3 etapas: cuestionario, observaciones clínicas y análisis especializado</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">📚</div>
