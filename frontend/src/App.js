@@ -159,7 +159,7 @@ const LandingPage = ({ setView }) => {
       <section className="hero">
         <div className="container">
           <div className="hero-content">
-            <h1>Consultoría Veterinaria Profesional con IA</h1>
+            <h1>Consultoría Veterinaria Profesional</h1>
             <p>Plataforma exclusiva para médicos veterinarios certificados. Obtén diagnósticos especializados y planes de tratamiento basados en evidencia científica.</p>
             <div className="hero-actions">
               <button onClick={() => setView('register')} className="btn btn-primary btn-large">
