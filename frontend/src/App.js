@@ -1035,7 +1035,7 @@ const NewConsultation = ({ setView }) => {
             <div className="step-indicator">
               <div className="step completed">1. Cuestionario</div>
               <div className="step completed">2. Observaciones</div>
-              <div className="step active">3. Análisis IA</div>
+              <div className="step active">3. Análisis</div>
             </div>
 
             <div className="ai-analysis-section">
