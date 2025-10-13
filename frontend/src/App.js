@@ -103,9 +103,39 @@ const LoadingScreen = () => (
 // Navigation Header
 const Header = ({ setView, showAuth = true }) => {
   const { veterinarian, logout } = useVet();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Update if at top
+      setIsAtTop(currentScrollY < 50);
+      
+      // Hide/show header based on scroll direction
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+        setIsMenuOpen(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <header className="header">
+    <header className={`header ${!isHeaderVisible ? 'hidden' : ''} ${isAtTop ? '' : 'transparent'}`}>
       <div className="container">
         <div className="nav-brand" onClick={() => setView(veterinarian ? 'dashboard' : 'landing')}>
           <img src="/savant_logo.png" alt="Savant Vet" className="logo-image" />
@@ -113,37 +143,42 @@ const Header = ({ setView, showAuth = true }) => {
         </div>
         
         {showAuth && (
-          <nav className="nav-menu">
-            {veterinarian ? (
-              <>
-                <button onClick={() => setView('dashboard')} className="nav-link">
-                  Dashboard
-                </button>
-                <button onClick={() => setView('new-consultation')} className="nav-link">
-                  Nueva Consulta
-                </button>
-                <button onClick={() => setView('consultation-history')} className="nav-link">
-                  Historial
-                </button>
-                <button onClick={() => setView('membership')} className="nav-link">
-                  Membresía
-                </button>
-                <div className="vet-profile">
-                  <span>Dr. {veterinarian.nombre}</span>
-                  <button onClick={logout} className="logout-btn">Salir</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <button onClick={() => setView('login')} className="nav-link">
-                  Iniciar Sesión
-                </button>
-                <button onClick={() => setView('register')} className="btn btn-primary">
-                  Registrarse
-                </button>
-              </>
-            )}
-          </nav>
+          <>
+            <button className="menu-toggle" onClick={toggleMenu}>
+              {isMenuOpen ? '✕' : '☰'}
+            </button>
+            <nav className={`nav-menu ${isMenuOpen ? 'mobile-visible' : 'mobile-hidden'}`}>
+              {veterinarian ? (
+                <>
+                  <button onClick={() => { setView('dashboard'); setIsMenuOpen(false); }} className="nav-link">
+                    Dashboard
+                  </button>
+                  <button onClick={() => { setView('new-consultation'); setIsMenuOpen(false); }} className="nav-link">
+                    Nueva Consulta
+                  </button>
+                  <button onClick={() => { setView('consultation-history'); setIsMenuOpen(false); }} className="nav-link">
+                    Historial
+                  </button>
+                  <button onClick={() => { setView('membership'); setIsMenuOpen(false); }} className="nav-link">
+                    Membresía
+                  </button>
+                  <div className="vet-profile">
+                    <span>Dr. {veterinarian.nombre}</span>
+                    <button onClick={() => { logout(); setIsMenuOpen(false); }} className="logout-btn">Salir</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => { setView('login'); setIsMenuOpen(false); }} className="nav-link">
+                    Iniciar Sesión
+                  </button>
+                  <button onClick={() => { setView('register'); setIsMenuOpen(false); }} className="btn btn-primary">
+                    Registrarse
+                  </button>
+                </>
+              )}
+            </nav>
+          </>
         )}
       </div>
     </header>
