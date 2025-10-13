@@ -1336,7 +1336,7 @@ const MembershipPage = ({ setView }) => {
       
       <div className="container">
         <div className="page-header">
-          <h1>Membresías VetMed Pro</h1>
+          <h1>Membresías Savant Vet</h1>
           <p>Elige el plan que mejor se adapte a tus necesidades</p>
           <div className="current-status" style={{color: status.color}}>
             Estado actual: {status.text}
