@@ -235,11 +235,7 @@ body {
 .hero-content p {
   font-size: 20px;
   margin-bottom: 40px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 16px 24px;
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  color: #2c5f8d;
+  opacity: 0.9;
 }
 
 .hero-actions {
