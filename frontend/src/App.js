@@ -96,7 +96,7 @@ const Router = () => {
 const LoadingScreen = () => (
   <div className="loading-screen">
     <div className="loading-spinner"></div>
-    <p>Cargando VetMed Pro...</p>
+    <p>Cargando Savant Vet...</p>
   </div>
 );
 
