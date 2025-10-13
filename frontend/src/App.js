@@ -1509,7 +1509,7 @@ const PaymentSuccess = ({ setView }) => {
             <div className="status-card success">
               <div className="status-icon">✅</div>
               <h2>¡Pago Exitoso!</h2>
-              <p>Tu membresía ha sido activada correctamente. Ya puedes comenzar a usar todas las funciones de VetMed Pro.</p>
+              <p>Tu membresía ha sido activada correctamente. Ya puedes comenzar a usar todas las funciones de Savant Vet.</p>
               <div className="status-actions">
                 <button onClick={() => setView('dashboard')} className="btn btn-primary">
                   Ir al Dashboard
