@@ -51,13 +51,26 @@ body {
 
 /* Header styles */
 .header {
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 16px 0;
-  position: sticky;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+  padding: 12px 0;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.header.hidden {
+  transform: translateY(-100%);
+}
+
+.header.transparent {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
 }
 
 .header .container {
