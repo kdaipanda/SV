@@ -496,6 +496,7 @@ body {
 .dashboard-page {
   min-height: 100vh;
   background: #f7fafc;
+  padding-top: 20px;
 }
 
 .dashboard-header {
