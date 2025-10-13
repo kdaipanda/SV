@@ -188,7 +188,7 @@ async def verify_veterinarian_membership(veterinarian_id: str):
 
 @app.get("/")
 async def root():
-    return {"message": "VetMed Pro - Plataforma de Consultoría Veterinaria"}
+    return {"message": "Savant Vet - Plataforma de Consultoría Veterinaria"}
 
 # Authentication endpoints
 @app.post("/api/auth/register", response_model=Veterinarian)
