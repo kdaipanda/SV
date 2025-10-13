@@ -108,8 +108,8 @@ const Header = ({ setView, showAuth = true }) => {
     <header className="header">
       <div className="container">
         <div className="nav-brand" onClick={() => setView(veterinarian ? 'dashboard' : 'landing')}>
-          <div className="logo">🏥</div>
-          <h1>VetMed Pro</h1>
+          <img src="/savant_logo.png" alt="Savant Vet" className="logo-image" />
+          <h1>Savant Vet</h1>
         </div>
         
         {showAuth && (
