@@ -84,6 +84,11 @@ body {
   font-weight: 700;
 }
 
+.logo-image {
+  height: 40px;
+  width: auto;
+}
+
 .nav-menu {
   display: flex;
   align-items: center;
