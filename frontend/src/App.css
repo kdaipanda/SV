@@ -274,10 +274,12 @@ body {
 .hero {
   background: linear-gradient(135deg, #2c5f8d 0%, #1b7b6e 100%);
   color: white;
-  padding: 80px 0;
-  min-height: 70vh;
+  padding: 60px 0;
+  min-height: 100vh;
   display: flex;
   align-items: center;
+  margin-top: -80px;
+  padding-top: 140px;
 }
 
 .hero .container {
