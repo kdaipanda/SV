@@ -222,7 +222,7 @@ const LandingPage = ({ setView }) => {
         <div className="container">
           <div className="cta-content">
             <h2>¿Listo para revolucionar tus consultas veterinarias?</h2>
-            <p>Únete a cientos de veterinarios que ya confían en VetMed Pro</p>
+            <p>Únete a cientos de veterinarios que ya confían en Savant Vet</p>
             <button onClick={() => setView('register')} className="btn btn-primary btn-large">
               Registrarse Gratis
             </button>
