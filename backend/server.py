@@ -377,7 +377,7 @@ async def analyze_consultation(consultation_id: str):
         return {"analysis": ai_response, "consultation_id": consultation_id}
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error en el análisis de IA: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error en el análisis: {str(e)}")
 
 @app.get("/api/consultations/{vet_id}/history")
 async def get_consultation_history(vet_id: str):
