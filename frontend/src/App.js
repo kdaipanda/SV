@@ -1060,7 +1060,7 @@ const NewConsultation = ({ setView }) => {
           <div className="consultation-header">
             <button onClick={() => setStep(2)} className="back-btn">← Volver</button>
             <h1>Nueva Consulta - Paso 3/3</h1>
-            <p>Análisis Especializado</p>
+            <p>Análisis Diagnóstico Especializado</p>
           </div>
 
           {error && <div className="error-message">{error}</div>}
