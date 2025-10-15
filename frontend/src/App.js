@@ -1041,7 +1041,7 @@ const NewConsultation = ({ setView }) => {
 
               <div className="form-actions">
                 <button type="submit" disabled={loading} className="btn btn-primary btn-large">
-                  {loading ? 'Guardando...' : 'Continuar al Análisis IA'}
+                  {loading ? 'Guardando...' : 'Continuar al Análisis'}
                 </button>
               </div>
             </form>
