@@ -1132,7 +1132,302 @@ const NewConsultation = ({ setView }) => {
                 </div>
               </div>
 
-              {/* Moved to step 2 */}
+              <div className="form-section">
+                <h3>Historial Médico</h3>
+                <div className="form-group">
+                  <label>Vacunas Vigentes *</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="vacunas_vigentes"
+                        value="SI"
+                        checked={formData.vacunas_vigentes === 'SI'}
+                        onChange={(e) => setFormData({...formData, vacunas_vigentes: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="vacunas_vigentes"
+                        value="NO"
+                        checked={formData.vacunas_vigentes === 'NO'}
+                        onChange={(e) => setFormData({...formData, vacunas_vigentes: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.vacunas_vigentes === 'SI' && (
+                    <input
+                      type="text"
+                      value={formData.vacunas_cual}
+                      onChange={(e) => setFormData({...formData, vacunas_cual: e.target.value})}
+                      placeholder="¿Cuáles?"
+                      className="mt-2"
+                    />
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>Desparasitación Interna</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="desparasitacion_interna"
+                        value="SI"
+                        checked={formData.desparasitacion_interna === 'SI'}
+                        onChange={(e) => setFormData({...formData, desparasitacion_interna: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="desparasitacion_interna"
+                        value="NO"
+                        checked={formData.desparasitacion_interna === 'NO'}
+                        onChange={(e) => setFormData({...formData, desparasitacion_interna: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.desparasitacion_interna === 'SI' && (
+                    <input
+                      type="text"
+                      value={formData.desparasitacion_interna_cual}
+                      onChange={(e) => setFormData({...formData, desparasitacion_interna_cual: e.target.value})}
+                      placeholder="¿Cuál?"
+                      className="mt-2"
+                    />
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>Desparasitación Externa</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="desparasitacion_externa"
+                        value="SI"
+                        checked={formData.desparasitacion_externa === 'SI'}
+                        onChange={(e) => setFormData({...formData, desparasitacion_externa: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="desparasitacion_externa"
+                        value="NO"
+                        checked={formData.desparasitacion_externa === 'NO'}
+                        onChange={(e) => setFormData({...formData, desparasitacion_externa: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.desparasitacion_externa === 'SI' && (
+                    <div className="form-row">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          value={formData.desparasitacion_externa_producto}
+                          onChange={(e) => setFormData({...formData, desparasitacion_externa_producto: e.target.value})}
+                          placeholder="Producto"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="date"
+                          value={formData.desparasitacion_externa_fecha}
+                          onChange={(e) => setFormData({...formData, desparasitacion_externa_fecha: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>Cirugías Previas</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="cirugias_previas"
+                        value="SI"
+                        checked={formData.cirugias_previas === 'SI'}
+                        onChange={(e) => setFormData({...formData, cirugias_previas: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="cirugias_previas"
+                        value="NO"
+                        checked={formData.cirugias_previas === 'NO'}
+                        onChange={(e) => setFormData({...formData, cirugias_previas: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.cirugias_previas === 'SI' && (
+                    <input
+                      type="text"
+                      value={formData.cirugias_cual}
+                      onChange={(e) => setFormData({...formData, cirugias_cual: e.target.value})}
+                      placeholder="¿Cuál?"
+                      className="mt-2"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h3>Hábitat y Alimentación</h3>
+                <div className="form-group">
+                  <label>Hábitat de la Mascota *</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="habitat"
+                        value="INTERIOR"
+                        checked={formData.habitat === 'INTERIOR'}
+                        onChange={(e) => setFormData({...formData, habitat: e.target.value})}
+                      />
+                      Interior
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="habitat"
+                        value="EXTERIOR"
+                        checked={formData.habitat === 'EXTERIOR'}
+                        onChange={(e) => setFormData({...formData, habitat: e.target.value})}
+                      />
+                      Exterior
+                    </label>
+                  </div>
+                </div>
+
+                <div className="form-section-subtitle">
+                  <h4>Alimentación</h4>
+                </div>
+                
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Alimento Seco - Marca</label>
+                    <input
+                      type="text"
+                      value={formData.alimentacion_seco}
+                      onChange={(e) => setFormData({...formData, alimentacion_seco: e.target.value})}
+                      placeholder="Marca del alimento seco"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Alimento Húmedo - Marca</label>
+                    <input
+                      type="text"
+                      value={formData.alimentacion_humedo}
+                      onChange={(e) => setFormData({...formData, alimentacion_humedo: e.target.value})}
+                      placeholder="Marca del alimento húmedo"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Alimentación Casera</label>
+                    <input
+                      type="text"
+                      value={formData.alimentacion_casero}
+                      onChange={(e) => setFormData({...formData, alimentacion_casero: e.target.value})}
+                      placeholder="Descripción de la alimentación casera"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Frecuencia de Alimentación</label>
+                    <input
+                      type="text"
+                      value={formData.alimentacion_frecuencia}
+                      onChange={(e) => setFormData({...formData, alimentacion_frecuencia: e.target.value})}
+                      placeholder="Ej: 2 veces al día"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Paseos</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="paseos"
+                        value="SI"
+                        checked={formData.paseos === 'SI'}
+                        onChange={(e) => setFormData({...formData, paseos: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="paseos"
+                        value="NO"
+                        checked={formData.paseos === 'NO'}
+                        onChange={(e) => setFormData({...formData, paseos: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.paseos === 'SI' && (
+                    <input
+                      type="text"
+                      value={formData.paseos_frecuencia}
+                      onChange={(e) => setFormData({...formData, paseos_frecuencia: e.target.value})}
+                      placeholder="Frecuencia de paseos"
+                      className="mt-2"
+                    />
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>Baños o Servicio de Estética Reciente</label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="baños_estetica"
+                        value="SI"
+                        checked={formData.baños_estetica === 'SI'}
+                        onChange={(e) => setFormData({...formData, baños_estetica: e.target.value})}
+                      />
+                      Sí
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="baños_estetica"
+                        value="NO"
+                        checked={formData.baños_estetica === 'NO'}
+                        onChange={(e) => setFormData({...formData, baños_estetica: e.target.value})}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {formData.baños_estetica === 'SI' && (
+                    <input
+                      type="date"
+                      value={formData.baños_fecha}
+                      onChange={(e) => setFormData({...formData, baños_fecha: e.target.value})}
+                      className="mt-2"
+                    />
+                  )}
+                </div>
+              </div>
 
               <div className="form-actions">
                 <button
