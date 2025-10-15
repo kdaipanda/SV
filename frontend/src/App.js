@@ -115,8 +115,8 @@ const Header = ({ setView, showAuth = true }) => {
       // Update if at top
       setIsAtTop(currentScrollY < 50);
       
-      // Hide/show header based on scroll direction
-      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+      // Hide/show header based on scroll direction (more permissive)
+      if (currentScrollY > lastScrollY && currentScrollY > 400) {
         setIsHeaderVisible(false);
         setIsMenuOpen(false);
       } else {
