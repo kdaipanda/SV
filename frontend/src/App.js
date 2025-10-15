@@ -1623,7 +1623,7 @@ const Profile = ({ setView }) => {
                 {veterinarian.nombre.charAt(0)}
               </div>
               <div className="profile-info">
-                <h2>Dr. {veterinarian.nombre}</h2>
+                <h2>{veterinarian.nombre}</h2>
                 <p>{veterinarian.especialidad}</p>
                 <span className={`verification-status ${veterinarian.verified ? 'verified' : 'pending'}`}>
                   {veterinarian.verified ? '✅ Verificado' : '⏳ Pendiente de verificación'}
