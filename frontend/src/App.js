@@ -582,7 +582,7 @@ const Dashboard = ({ setView }) => {
       
       <div className="container">
         <div className="dashboard-header">
-          <h1>Bienvenido, Dr. {veterinarian.nombre}</h1>
+          <h1>Bienvenido, {veterinarian.nombre}</h1>
           <p>Gestiona tus consultas veterinarias y membresía</p>
         </div>
 
