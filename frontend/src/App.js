@@ -964,18 +964,56 @@ const NewConsultation = ({ setView }) => {
               </div>
 
               <div className="form-section">
-                <h3>Información del Paciente</h3>
+                <h3>Información General</h3>
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Especie *</label>
+                    <label>Fecha *</label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.fecha}
+                      onChange={(e) => setFormData({...formData, fecha: e.target.value})}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Nombre de la Mascota *</label>
                     <input
                       type="text"
                       required
-                      value={formData.especie}
-                      onChange={(e) => setFormData({...formData, especie: e.target.value})}
-                      placeholder="Canino, Felino, Bovino..."
+                      value={formData.nombre_mascota}
+                      onChange={(e) => setFormData({...formData, nombre_mascota: e.target.value})}
+                      placeholder="Nombre de la mascota"
                     />
                   </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Nombre del Dueño *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.nombre_dueño}
+                      onChange={(e) => setFormData({...formData, nombre_dueño: e.target.value})}
+                      placeholder="Nombre completo del propietario"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Zona Geográfica de Residencia *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.zona_geografica}
+                      onChange={(e) => setFormData({...formData, zona_geografica: e.target.value})}
+                      placeholder="Ciudad, estado"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h3>Datos Físicos de la Mascota</h3>
+                <div className="form-row">
                   <div className="form-group">
                     <label>Raza *</label>
                     <input
@@ -984,6 +1022,15 @@ const NewConsultation = ({ setView }) => {
                       value={formData.raza}
                       onChange={(e) => setFormData({...formData, raza: e.target.value})}
                       placeholder="Labrador, Persa, Holstein..."
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Mix</label>
+                    <input
+                      type="text"
+                      value={formData.mix}
+                      onChange={(e) => setFormData({...formData, mix: e.target.value})}
+                      placeholder="Si es mestizo, especificar"
                     />
                   </div>
                 </div>
@@ -1008,6 +1055,79 @@ const NewConsultation = ({ setView }) => {
                       onChange={(e) => setFormData({...formData, peso: e.target.value})}
                       placeholder="25 kg, 3.5 kg..."
                     />
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Condición Corporal *</label>
+                    <div className="radio-group">
+                      {[1, 2, 3, 4, 5].map(num => (
+                        <label key={num} className="radio-label">
+                          <input
+                            type="radio"
+                            name="condicion_corporal"
+                            value={num}
+                            checked={formData.condicion_corporal === num.toString()}
+                            onChange={(e) => setFormData({...formData, condicion_corporal: e.target.value})}
+                          />
+                          {num}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Sexo *</label>
+                    <div className="radio-group">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="sexo"
+                          value="hembra"
+                          checked={formData.sexo === 'hembra'}
+                          onChange={(e) => setFormData({...formData, sexo: e.target.value})}
+                        />
+                        Hembra
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="sexo"
+                          value="macho"
+                          checked={formData.sexo === 'macho'}
+                          onChange={(e) => setFormData({...formData, sexo: e.target.value})}
+                        />
+                        Macho
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Estado Reproductivo *</label>
+                    <div className="radio-group">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="estado_reproductivo"
+                          value="entero"
+                          checked={formData.estado_reproductivo === 'entero'}
+                          onChange={(e) => setFormData({...formData, estado_reproductivo: e.target.value})}
+                        />
+                        Entero
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="estado_reproductivo"
+                          value="castrado"
+                          checked={formData.estado_reproductivo === 'castrado'}
+                          onChange={(e) => setFormData({...formData, estado_reproductivo: e.target.value})}
+                        />
+                        Castrado
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
