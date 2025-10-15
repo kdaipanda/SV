@@ -798,27 +798,46 @@ body {
 .step-indicator {
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
-  gap: 16px;
+  margin-bottom: 48px;
+  gap: 20px;
+  position: relative;
+}
+
+.step-indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+  z-index: 0;
 }
 
 .step {
-  padding: 12px 24px;
-  border-radius: 24px;
+  padding: 16px 32px;
+  border-radius: 50px;
   font-size: 14px;
-  font-weight: 500;
-  background: #e2e8f0;
-  color: #4a5568;
+  font-weight: 600;
+  background: rgba(226, 232, 240, 0.8);
+  color: #64748b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
 }
 
 .step.active {
-  background: #2c5f8d;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
 }
 
 .step.completed {
-  background: #48bb78;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
 }
 
 .consultation-form {
