@@ -112,22 +112,22 @@ class ConsultationData(BaseModel):
     estado_reproductivo: str
     vacunas_vigentes: str
     vacunas_cual: Optional[str] = None
-    desparasitacion_interna: str
+    desparasitacion_interna: Optional[str] = "NO"
     desparasitacion_interna_cual: Optional[str] = None
-    desparasitacion_externa: str
+    desparasitacion_externa: Optional[str] = "NO"
     desparasitacion_externa_producto: Optional[str] = None
     desparasitacion_externa_fecha: Optional[str] = None
-    habitat: str
-    zona_geografica: str
+    habitat: Optional[str] = "INTERIOR"
+    zona_geografica: Optional[str] = None
     alimentacion_seco: Optional[str] = None
     alimentacion_humedo: Optional[str] = None
     alimentacion_casero: Optional[str] = None
     alimentacion_frecuencia: Optional[str] = None
-    paseos: str
+    paseos: Optional[str] = "NO"
     paseos_frecuencia: Optional[str] = None
-    baños_estetica: str
+    baños_estetica: Optional[str] = "NO"
     baños_fecha: Optional[str] = None
-    cirugias_previas: str
+    cirugias_previas: Optional[str] = "NO"
     cirugias_cual: Optional[str] = None
     aspecto_pelaje: Optional[str] = None
     aspecto_piel: Optional[str] = None
