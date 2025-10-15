@@ -732,12 +732,7 @@ const NewConsultation = ({ setView }) => {
             especie: formData.especie,
             raza: formData.raza,
             edad: formData.edad,
-            peso: formData.peso,
-            motivo_consulta: formData.motivo_consulta,
-            sintomas: formData.sintomas,
-            duracion_sintomas: formData.duracion_sintomas,
-            tratamientos_previos: formData.tratamientos_previos,
-            historia_clinica: formData.historia_clinica
+            peso: formData.peso
           }
         })
       });
