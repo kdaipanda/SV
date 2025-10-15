@@ -99,16 +99,18 @@ class ConsultationData(BaseModel):
     veterinarian_id: str
     category: str
     
-    # Stage 1: Initial questionnaire
+    # Stage 1: Basic pet information
     especie: str
     raza: str
     edad: str
     peso: str
-    motivo_consulta: str
-    sintomas: str
-    duracion_sintomas: str
-    tratamientos_previos: str
-    historia_clinica: str
+    
+    # Stage 2: Consultation details (optional at creation)
+    motivo_consulta: Optional[str] = None
+    sintomas: Optional[str] = None
+    duracion_sintomas: Optional[str] = None
+    tratamientos_previos: Optional[str] = None
+    historia_clinica: Optional[str] = None
     
     # Stage 2: Clinical observations
     parametros_vitales: Optional[str] = None
