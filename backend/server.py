@@ -135,30 +135,30 @@ class ConsultationData(BaseModel):
     aspecto_ojos: Optional[str] = None
     aspecto_otros: Optional[str] = None
     
-    # Historial reportado
-    vomito: str
+    # Historial reportado (optional fields)
+    vomito: Optional[str] = "NO"
     vomito_color: Optional[str] = None
     vomito_aspecto: Optional[str] = None
-    diarrea: str
+    diarrea: Optional[str] = "NO"
     diarrea_color: Optional[str] = None
     diarrea_aspecto: Optional[str] = None
-    orina: str
+    orina: Optional[str] = "NO"
     orina_color: Optional[str] = None
     orina_olor: Optional[str] = None
-    secrecion_nasal: str
+    secrecion_nasal: Optional[str] = "NO"
     secrecion_nasal_color: Optional[str] = None
     secrecion_nasal_aspecto: Optional[str] = None
-    secrecion_ocular: str
+    secrecion_ocular: Optional[str] = "NO"
     secrecion_ocular_color: Optional[str] = None
-    dientes: str
+    dientes: Optional[str] = "limpios"
     dientes_otros: Optional[str] = None
-    piel_condicion: str
+    piel_condicion: Optional[str] = "normal"
     ultima_comida: Optional[str] = None
     ultima_comida_fecha: Optional[str] = None
-    liquidos: str
+    liquidos: Optional[str] = "NO"
     liquidos_cantidad: Optional[str] = None
-    actividad_general: str
-    medicamentos: str
+    actividad_general: Optional[str] = "ACTIVO"
+    medicamentos: Optional[str] = "NO"
     medicamentos_cual: Optional[str] = None
     
     # Stage 2: Consultation details (optional at creation)
