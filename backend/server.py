@@ -99,11 +99,67 @@ class ConsultationData(BaseModel):
     veterinarian_id: str
     category: str
     
-    # Stage 1: Basic pet information
-    especie: str
+    # Stage 1: Complete pet information
+    fecha: str
+    nombre_mascota: str
+    nombre_dueño: str
     raza: str
+    mix: Optional[str] = None
     edad: str
     peso: str
+    condicion_corporal: str
+    sexo: str
+    estado_reproductivo: str
+    vacunas_vigentes: str
+    vacunas_cual: Optional[str] = None
+    desparasitacion_interna: str
+    desparasitacion_interna_cual: Optional[str] = None
+    desparasitacion_externa: str
+    desparasitacion_externa_producto: Optional[str] = None
+    desparasitacion_externa_fecha: Optional[str] = None
+    habitat: str
+    zona_geografica: str
+    alimentacion_seco: Optional[str] = None
+    alimentacion_humedo: Optional[str] = None
+    alimentacion_casero: Optional[str] = None
+    alimentacion_frecuencia: Optional[str] = None
+    paseos: str
+    paseos_frecuencia: Optional[str] = None
+    baños_estetica: str
+    baños_fecha: Optional[str] = None
+    cirugias_previas: str
+    cirugias_cual: Optional[str] = None
+    aspecto_pelaje: Optional[str] = None
+    aspecto_piel: Optional[str] = None
+    aspecto_oidos: Optional[str] = None
+    aspecto_ojos: Optional[str] = None
+    aspecto_otros: Optional[str] = None
+    
+    # Historial reportado
+    vomito: str
+    vomito_color: Optional[str] = None
+    vomito_aspecto: Optional[str] = None
+    diarrea: str
+    diarrea_color: Optional[str] = None
+    diarrea_aspecto: Optional[str] = None
+    orina: str
+    orina_color: Optional[str] = None
+    orina_olor: Optional[str] = None
+    secrecion_nasal: str
+    secrecion_nasal_color: Optional[str] = None
+    secrecion_nasal_aspecto: Optional[str] = None
+    secrecion_ocular: str
+    secrecion_ocular_color: Optional[str] = None
+    dientes: str
+    dientes_otros: Optional[str] = None
+    piel_condicion: str
+    ultima_comida: Optional[str] = None
+    ultima_comida_fecha: Optional[str] = None
+    liquidos: str
+    liquidos_cantidad: Optional[str] = None
+    actividad_general: str
+    medicamentos: str
+    medicamentos_cual: Optional[str] = None
     
     # Stage 2: Consultation details (optional at creation)
     motivo_consulta: Optional[str] = None
