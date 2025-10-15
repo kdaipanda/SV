@@ -827,9 +827,9 @@ const NewConsultation = ({ setView }) => {
 
           <div className="consultation-form-container">
             <div className="step-indicator">
-              <div className="step active">1. Cuestionario</div>
-              <div className="step">2. Observaciones</div>
-              <div className="step">3. Análisis</div>
+              <div className="step active">1. Datos de la Mascota</div>
+              <div className="step">2. Motivo de Consulta</div>
+              <div className="step">3. Análisis Diagnóstico</div>
             </div>
 
             <form onSubmit={handleSubmitStep1} className="consultation-form">
