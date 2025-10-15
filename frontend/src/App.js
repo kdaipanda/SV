@@ -163,7 +163,7 @@ const Header = ({ setView, showAuth = true }) => {
                     Membresía
                   </button>
                   <div className="vet-profile">
-                    <span>Dr. {veterinarian.nombre}</span>
+                    <span>{veterinarian.nombre}</span>
                     <button onClick={() => { logout(); setIsMenuOpen(false); }} className="logout-btn">Salir</button>
                   </div>
                 </>
