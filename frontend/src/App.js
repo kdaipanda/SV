@@ -762,6 +762,11 @@ const NewConsultation = ({ setView }) => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          motivo_consulta: formData.motivo_consulta,
+          sintomas: formData.sintomas,
+          duracion_sintomas: formData.duracion_sintomas,
+          tratamientos_previos: formData.tratamientos_previos,
+          historia_clinica: formData.historia_clinica,
           parametros_vitales: formData.parametros_vitales,
           ambiente_manejo: formData.ambiente_manejo,
           laboratorio_estudios: formData.laboratorio_estudios,
