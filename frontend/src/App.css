@@ -857,9 +857,24 @@ body {
 }
 
 .form-section h3 {
-  color: #2c5f8d;
-  font-size: 20px;
-  margin-bottom: 20px;
+  color: #1e293b;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  position: relative;
+  padding-left: 16px;
+}
+
+.form-section h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
 }
 
 .category-grid {
