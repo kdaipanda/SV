@@ -897,61 +897,7 @@ const NewConsultation = ({ setView }) => {
                 </div>
               </div>
 
-              <div className="form-section">
-                <h3>Motivo de Consulta</h3>
-                <div className="form-group">
-                  <label>Motivo Principal *</label>
-                  <textarea
-                    required
-                    rows={3}
-                    value={formData.motivo_consulta}
-                    onChange={(e) => setFormData({...formData, motivo_consulta: e.target.value})}
-                    placeholder="Describa el motivo principal de la consulta..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Síntomas Principales *</label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formData.sintomas}
-                    onChange={(e) => setFormData({...formData, sintomas: e.target.value})}
-                    placeholder="Describa los síntomas observados..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Duración de los Síntomas *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.duracion_sintomas}
-                    onChange={(e) => setFormData({...formData, duracion_sintomas: e.target.value})}
-                    placeholder="3 días, 2 semanas, crónico..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Tratamientos Previos</label>
-                  <textarea
-                    rows={3}
-                    value={formData.tratamientos_previos}
-                    onChange={(e) => setFormData({...formData, tratamientos_previos: e.target.value})}
-                    placeholder="Medicamentos, tratamientos o intervenciones realizadas..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Historia Clínica Relevante</label>
-                  <textarea
-                    rows={4}
-                    value={formData.historia_clinica}
-                    onChange={(e) => setFormData({...formData, historia_clinica: e.target.value})}
-                    placeholder="Antecedentes médicos, cirugías previas, condiciones crónicas..."
-                  />
-                </div>
-              </div>
+              {/* Moved to step 2 */}
 
               <div className="form-actions">
                 <button
