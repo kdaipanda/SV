@@ -284,7 +284,7 @@ const LandingPage = ({ setView }) => {
         </div>
       </section>
 
-      <section className="memberships">
+      <section id="membresias" className="memberships">
         <div className="container">
           <div className="memberships-header">
             <div className="services-badge">
