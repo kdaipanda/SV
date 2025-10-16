@@ -1194,12 +1194,6 @@ const NewConsultation = ({ setView }) => {
         <Header setView={setView} />
         
         <div className="container">
-          <div className="consultation-header">
-            <button onClick={() => setView('dashboard')} className="back-btn">← Volver</button>
-            <h1>Nueva Consulta - Paso 1/3</h1>
-            <p>Datos Generales de la Mascota</p>
-          </div>
-
           {error && <div className="error-message">{error}</div>}
 
           <div className="consultation-form-container">
