@@ -188,16 +188,16 @@ const LandingPage = ({ setView }) => {
       <section className="hero">
         <div className="container">
           <div className="hero-main">
-            <h1>Tu socio confiable para el bienestar de las mascotas</h1>
-            <p>En nuestra plataforma, priorizamos la salud y felicidad de tus pacientes. Nuestro equipo de especialistas dedicados está comprometido a brindar análisis profesionales basados en amor.</p>
+            <h1>Plataforma Médica Profesional para Veterinarios Certificados</h1>
+            <p>Savant Vet es una plataforma especializada de consultoría veterinaria diseñada exclusivamente para médicos veterinarios profesionales. Obtén diagnósticos especializados, análisis clínicos avanzados y planes de tratamiento basados en evidencia científica para brindar el mejor cuidado a tus pacientes.</p>
             
             <div className="hero-actions">
               <button onClick={() => setView('register')} className="btn btn-primary btn-large">
-                Comenzar Ahora
+                Registrarse como Veterinario
                 <span className="btn-arrow">→</span>
               </button>
-              <button onClick={() => setView('login')} className="btn btn-link">
-                Ver todos nuestros servicios →
+              <button onClick={() => setView('membership')} className="btn btn-link">
+                Ver Membresías →
               </button>
             </div>
           </div>
