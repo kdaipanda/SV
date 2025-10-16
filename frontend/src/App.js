@@ -266,33 +266,24 @@ const LandingPage = ({ setView }) => {
               <div className="service-icon yellow">
                 <span>🔬</span>
               </div>
-              <h3>Análisis preventivo para la salud de por vida</h3>
-              <p>El análisis preventivo es vital para mantener a las mascotas sanas mediante chequeos regulares y tratamientos balanceados durante toda su vida.</p>
-              <button onClick={() => setView('register')} className="btn btn-dark">
-                Reservar servicio
-              </button>
+              <h3>Análisis Diagnóstico Especializado</h3>
+              <p>Análisis veterinario profesional con inteligencia especializada para obtener diagnósticos diferenciales precisos y planes de tratamiento basados en evidencia científica.</p>
             </div>
             
             <div className="service-card">
               <div className="service-icon blue">
                 <span>🐕</span>
               </div>
-              <h3>Consultas especializadas para tus pacientes</h3>
-              <p>Los servicios de consulta son esenciales para la salud pública. Juegan un papel crucial en la preservación de la propagación de enfermedades infecciosas.</p>
-              <button onClick={() => setView('register')} className="btn btn-dark">
-                Reservar servicio
-              </button>
+              <h3>Consultas Categorizadas por Especies</h3>
+              <p>Sistemas especializados para pequeñas especies, animales de producción, equinos y exóticos. Cada categoría con protocolos específicos y actualizados.</p>
             </div>
             
             <div className="service-card">
               <div className="service-icon orange">
                 <span>⚕️</span>
               </div>
-              <h3>Servicios médicos especializados</h3>
-              <p>Los servicios médicos especializados brindan una atención integral con experiencia y cuidado, priorizando diversos métodos de beneficios para las mascotas.</p>
-              <button onClick={() => setView('register')} className="btn btn-dark">
-                Reservar servicio
-              </button>
+              <h3>Plataforma Profesional Verificada</h3>
+              <p>Acceso exclusivo para médicos veterinarios certificados con validación de cédulas profesionales mexicanas para garantizar la calidad del servicio.</p>
             </div>
           </div>
         </div>
