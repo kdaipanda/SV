@@ -193,23 +193,66 @@ const LandingPage = ({ setView }) => {
       
       <section className="hero">
         <div className="container">
-          <div className="hero-content">
-            <h1>Consultoría Veterinaria Profesional</h1>
-            <p>Plataforma exclusiva para médicos veterinarios certificados. Obtén diagnósticos especializados y planes de tratamiento basados en evidencia científica.</p>
+          <div className="hero-badge">
+            <span className="badge-dot"></span>
+            Savant Vet Solutions
+          </div>
+          
+          <div className="hero-main">
+            <h1>Tu socio confiable para el bienestar de las mascotas</h1>
+            <p>En nuestra plataforma, priorizamos la salud y felicidad de tus pacientes. Nuestro equipo de especialistas dedicados está comprometido a brindar análisis profesionales basados en amor.</p>
+            
             <div className="hero-actions">
               <button onClick={() => setView('register')} className="btn btn-primary btn-large">
                 Comenzar Ahora
+                <span className="btn-arrow">→</span>
               </button>
-              <button onClick={() => setView('login')} className="btn btn-secondary btn-large">
-                Iniciar Sesión
+              <button onClick={() => setView('login')} className="btn btn-link">
+                Ver todos nuestros servicios →
               </button>
             </div>
           </div>
-          <div className="hero-image">
-            <div className="hero-card">
-              <div className="card-icon">🔬</div>
-              <h3>Análisis Especializado</h3>
-              <p>Diagnósticos diferenciales y planes de tratamiento personalizados</p>
+
+          <div className="hero-images">
+            <div className="hero-image-card purple">
+              <img src="https://images.unsplash.com/photo-1543806296-fa4b3fdfa789?w=300&h=300&fit=crop&crop=faces" alt="Gato profesional" />
+            </div>
+            <div className="hero-image-card blue">
+              <img src="https://images.unsplash.com/photo-1596058939740-516d0d71f3d4?w=400&h=300&fit=crop&crop=faces" alt="Veterinario con mascota" />
+            </div>
+            <div className="hero-image-card yellow">
+              <img src="https://images.unsplash.com/photo-1553976166-ed1f57de4813?w=300&h=300&fit=crop&crop=faces" alt="Consulta veterinaria" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="services-badges">
+        <div className="container">
+          <div className="badges-grid">
+            <div className="service-badge">
+              <span className="badge-dot purple"></span>
+              Cuidado especializado
+            </div>
+            <div className="service-badge">
+              <span className="badge-dot blue"></span>
+              Análisis profesional
+            </div>
+            <div className="service-badge">
+              <span className="badge-dot green"></span>
+              Cuidado integral
+            </div>
+            <div className="service-badge">
+              <span className="badge-dot orange"></span>
+              Prevención de enfermedades
+            </div>
+            <div className="service-badge">
+              <span className="badge-dot teal"></span>
+              Consultoría especializada
+            </div>
+            <div className="service-badge">
+              <span className="badge-dot yellow"></span>
+              Diagnósticos avanzados
             </div>
           </div>
         </div>
