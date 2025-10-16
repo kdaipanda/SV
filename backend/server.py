@@ -357,39 +357,29 @@ async def analyze_consultation(consultation_id: str):
     consultation_text = f"""
     CONSULTA VETERINARIA - {category_info['name']}
     
-    INFORMACIÓN DEL PACIENTE:
-    - Especie: {consultation.get('especie', 'No especificada')}
+    INFORMACIÓN BÁSICA DEL PACIENTE:
+    - Fecha: {consultation.get('fecha', 'No especificada')}
+    - Nombre de la mascota: {consultation.get('nombre_mascota', 'No especificado')}
+    - Propietario: {consultation.get('nombre_dueño', 'No especificado')}
     - Raza: {consultation.get('raza', 'No especificada')}
     - Edad: {consultation.get('edad', 'No especificada')}
     - Peso: {consultation.get('peso', 'No especificado')}
+    - Sexo: {consultation.get('sexo', 'No especificado')}
+    - Estado reproductivo: {consultation.get('estado_reproductivo', 'No especificado')}
+    - Condición corporal: {consultation.get('condicion_corporal', 'No especificada')}
+    - Vacunas: {consultation.get('vacunas_vigentes', 'No especificado')} {consultation.get('vacunas_cual', '')}
+    - Zona geográfica: {consultation.get('zona_geografica', 'No especificada')}
     
-    MOTIVO DE CONSULTA:
-    {consultation.get('motivo_consulta', 'No especificado')}
+    INFORMACIÓN DETALLADA DEL PACIENTE:
+    {consultation.get('detalle_paciente', 'No se proporcionó información detallada')}
     
-    SÍNTOMAS PRINCIPALES:
-    {consultation.get('sintomas', 'No especificados')}
-    
-    DURACIÓN DE SÍNTOMAS:
-    {consultation.get('duracion_sintomas', 'No especificada')}
-    
-    TRATAMIENTOS PREVIOS:
-    {consultation.get('tratamientos_previos', 'Ninguno')}
-    
-    HISTORIA CLÍNICA RELEVANTE:
-    {consultation.get('historia_clinica', 'No especificada')}
-    
-    OBSERVACIONES CLÍNICAS:
-    - Parámetros vitales: {consultation.get('parametros_vitales', 'No registrados')}
-    - Ambiente y manejo: {consultation.get('ambiente_manejo', 'No especificado')}
-    - Estudios de laboratorio: {consultation.get('laboratorio_estudios', 'No realizados')}
-    - Notas adicionales: {consultation.get('notas_adicionales', 'Ninguna')}
-    
-    Por favor proporciona:
+    Por favor proporciona un análisis veterinario profesional que incluya:
     1. Diagnósticos diferenciales (mínimo 3)
     2. Plan de tratamiento detallado
     3. Estudios complementarios recomendados
     4. Pronóstico
     5. Referencias bibliográficas relevantes
+    6. Recomendaciones específicas basadas en la información proporcionada
     """
     
     try:
