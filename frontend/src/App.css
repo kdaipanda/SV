@@ -1996,10 +1996,23 @@ body {
 }
 
 .footer-section h4 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 28px;
   color: white;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.footer-section h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
 }
 
 .footer-brand {
