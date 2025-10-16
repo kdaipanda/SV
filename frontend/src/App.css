@@ -2558,6 +2558,14 @@ body {
     padding: 16px 0;
   }
   
+  .container {
+    padding: 0 20px;
+  }
+  
+  .nav-brand {
+    flex: 1;
+  }
+  
   .nav-brand h1 {
     font-size: 20px;
   }
@@ -2565,6 +2573,28 @@ body {
   .logo-image {
     width: 36px;
     height: 36px;
+  }
+  
+  .menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1) !important;
+    border: 2px solid rgba(59, 130, 246, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    font-size: 24px !important;
+    color: #3b82f6 !important;
+    cursor: pointer !important;
+    transition: all 0.3s !important;
+    z-index: 1001 !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+  }
+  
+  .menu-toggle:hover {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: rgba(59, 130, 246, 0.5) !important;
   }
   
   .nav-menu {
@@ -2578,6 +2608,7 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     max-height: calc(100vh - 70px);
     overflow-y: auto;
+    z-index: 1000;
   }
   
   .nav-link {
