@@ -243,6 +243,64 @@ body {
   margin-right: 4px;
 }
 
+/* Header Clock Styles */
+.header-clock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  margin-left: 16px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+}
+
+.header-clock:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.08) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.clock-icon {
+  font-size: 24px;
+  animation: clock-pulse 2s ease-in-out infinite;
+}
+
+@keyframes clock-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.clock-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.clock-time {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+.clock-date {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
 .user-menu-container {
   position: relative;
   margin-left: 20px;
