@@ -376,19 +376,117 @@
 }
 
 @media (max-width: 768px) {
+  /* Memberships Mobile */
+  .memberships {
+    padding: 80px 0 !important;
+  }
+  
+  .memberships-header h2 {
+    font-size: 36px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .memberships-header p {
+    font-size: 16px !important;
+    padding: 0 10px !important;
+  }
+  
   .membership-cards {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
     padding: 0 20px !important;
   }
   
+  .membership-card {
+    padding: 36px 24px !important;
+    min-height: auto !important;
+  }
+  
   .membership-card.featured {
     transform: none !important;
+  }
+  
+  .membership-card:hover {
+    transform: translateY(-4px) !important;
+  }
+  
+  .membership-header h3 {
+    font-size: 24px !important;
+  }
+  
+  .price .amount {
+    font-size: 40px !important;
+  }
+  
+  .price .currency {
+    font-size: 20px !important;
+  }
+  
+  .membership-features .feature {
+    font-size: 14px !important;
+    padding: 12px 0 !important;
+  }
+  
+  .popular-badge {
+    font-size: 12px !important;
+    padding: 6px 20px !important;
+  }
+  
+  /* Footer Mobile */
+  .footer {
+    padding: 60px 0 0 0 !important;
   }
   
   .footer-content {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
     padding: 0 20px !important;
+  }
+  
+  .footer-section h4 {
+    font-size: 16px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .footer-brand h2 {
+    font-size: 28px !important;
+  }
+  
+  .footer-section p,
+  .footer-section ul li a {
+    font-size: 14px !important;
+  }
+  
+  .contact-box {
+    padding: 20px !important;
+  }
+  
+  .footer-bottom {
+    padding: 24px 20px !important;
+  }
+  
+  .social-links a {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* Extra Small Mobile - iPhone SE and similar */
+@media (max-width: 375px) {
+  .memberships-header h2 {
+    font-size: 30px !important;
+  }
+  
+  .membership-card {
+    padding: 28px 20px !important;
+  }
+  
+  .price .amount {
+    font-size: 36px !important;
+  }
+  
+  .membership-features .feature {
+    font-size: 13px !important;
   }
 }
