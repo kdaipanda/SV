@@ -2148,14 +2148,14 @@ body {
 }
 
 .membership-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 40px !important;
+  max-width: 1300px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 @media (max-width: 1024px) {
