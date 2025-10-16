@@ -404,13 +404,9 @@ const LandingPage = ({ setView }) => {
                 <div className="feature">✅ Planes de tratamiento</div>
                 <div className="feature">✅ Soporte por email</div>
               </div>
-              <button onClick={() => setView('membership')} className="btn btn-outline">
-                Seleccionar Plan
-              </button>
             </div>
 
-            <div className="membership-card professional featured">
-              <div className="popular-badge">Más Popular</div>
+            <div className="membership-card professional">
               <div className="membership-header">
                 <h3>Profesional</h3>
                 <div className="price">
@@ -426,12 +422,10 @@ const LandingPage = ({ setView }) => {
                 <div className="feature">✅ Historial extendido</div>
                 <div className="feature">✅ Referencias bibliográficas</div>
               </div>
-              <button onClick={() => setView('membership')} className="btn btn-primary">
-                Seleccionar Plan
-              </button>
             </div>
 
-            <div className="membership-card premium">
+            <div className="membership-card premium featured">
+              <div className="popular-badge">Más Popular</div>
               <div className="membership-header">
                 <h3>Premium</h3>
                 <div className="price">
@@ -447,9 +441,6 @@ const LandingPage = ({ setView }) => {
                 <div className="feature">✅ Contenido exclusivo</div>
                 <div className="feature">✅ Análisis avanzados</div>
               </div>
-              <button onClick={() => setView('membership')} className="btn btn-outline">
-                Seleccionar Plan
-              </button>
             </div>
           </div>
         </div>
