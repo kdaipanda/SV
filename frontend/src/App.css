@@ -236,6 +236,44 @@ body {
   transform: translateY(0);
 }
 
+.btn-link {
+  background: transparent;
+  color: #64748b;
+  border: none;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.btn-link:hover {
+  color: #3b82f6;
+}
+
+.btn-arrow {
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
+
+.btn-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-dark {
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.btn-dark:hover {
+  background: #0f172a;
+  transform: translateY(-2px);
+}
+
 .btn-secondary {
   background: white;
   color: #2c5f8d;
