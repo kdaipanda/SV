@@ -130,7 +130,7 @@ const Header = ({ setView, showAuth = true }) => {
   };
 
   return (
-    <header className={`header ${!isHeaderVisible ? 'hidden' : ''} ${isAtTop ? '' : 'transparent'}`}>
+    <header className={`header ${isAtTop ? '' : 'transparent'}`}>
       <div className="container">
         <div className="nav-brand" onClick={() => setView(veterinarian ? 'dashboard' : 'landing')}>
           <img src="/savant_logo.png" alt="Savant Vet" className="logo-image" />
