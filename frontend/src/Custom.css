@@ -1,0 +1,81 @@
+/* Custom styles that override Tailwind - Load AFTER App.css */
+
+/* Memberships Section - FORCE STYLES */
+.membership-cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 40px !important;
+  max-width: 1300px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.membership-card {
+  background: rgba(59, 130, 246, 0.12) !important;
+  backdrop-filter: blur(25px) !important;
+  border-radius: 24px !important;
+  padding: 32px 24px !important;
+  border: 3px solid rgba(59, 130, 246, 0.5) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25), inset 0 0 80px rgba(59, 130, 246, 0.08) !important;
+  display: block !important;
+}
+
+.membership-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.2) 100%) !important;
+  pointer-events: none !important;
+  border-radius: 24px !important;
+}
+
+.membership-card.featured {
+  border-color: rgba(59, 130, 246, 0.9) !important;
+  transform: scale(1.08) !important;
+  box-shadow: 0 30px 60px rgba(59, 130, 246, 0.4), inset 0 0 100px rgba(59, 130, 246, 0.15) !important;
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-width: 4px !important;
+}
+
+/* Footer Grid - FORCE STYLES */
+.footer-content {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr !important;
+  gap: 50px !important;
+  margin-bottom: 50px !important;
+  align-items: start !important;
+  padding: 0 20px !important;
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 1024px) {
+  .membership-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .footer-content {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .membership-cards {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+}
