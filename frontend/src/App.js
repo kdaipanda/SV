@@ -379,6 +379,80 @@ const LandingPage = ({ setView }) => {
           </div>
         </div>
       </section>
+
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <div className="footer-brand">
+                <img src="/savant_logo.png" alt="Savant Vet" className="footer-logo" />
+                <h3>Savant Vet</h3>
+                <p>Plataforma profesional de consultoría veterinaria especializada para médicos veterinarios certificados en México.</p>
+              </div>
+            </div>
+
+            <div className="footer-section">
+              <h4>Servicios</h4>
+              <ul>
+                <li><a href="#" onClick={() => setView('register')}>Análisis Diagnóstico</a></li>
+                <li><a href="#" onClick={() => setView('register')}>Consultas Especializadas</a></li>
+                <li><a href="#" onClick={() => setView('register')}>Pequeñas Especies</a></li>
+                <li><a href="#" onClick={() => setView('register')}>Animales de Producción</a></li>
+                <li><a href="#" onClick={() => setView('register')}>Equinos</a></li>
+                <li><a href="#" onClick={() => setView('register')}>Animales Exóticos</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-section">
+              <h4>Empresa</h4>
+              <ul>
+                <li><a href="#" onClick={() => setView('landing')}>Acerca de Nosotros</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Nuestro Equipo</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Misión y Visión</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Contacto</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Carreras</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Blog</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-section">
+              <h4>Membresías</h4>
+              <ul>
+                <li><a href="#" onClick={() => setView('membership')}>Plan Básico</a></li>
+                <li><a href="#" onClick={() => setView('membership')}>Plan Profesional</a></li>
+                <li><a href="#" onClick={() => setView('membership')}>Plan Premium</a></li>
+                <li><a href="#" onClick={() => setView('membership')}>Comparar Planes</a></li>
+                <li><a href="#" onClick={() => setView('membership')}>Preguntas Frecuentes</a></li>
+                <li><a href="#" onClick={() => setView('membership')}>Soporte</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-section">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#" onClick={() => setView('landing')}>Términos de Servicio</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Política de Privacidad</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Política de Cookies</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Cumplimiento LOPD</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Código de Ética</a></li>
+                <li><a href="#" onClick={() => setView('landing')}>Licencias</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <div className="footer-bottom-content">
+              <p>&copy; 2025 Savant Vet. Todos los derechos reservados.</p>
+              <div className="footer-social">
+                <span>Síguenos:</span>
+                <a href="#" className="social-link">LinkedIn</a>
+                <a href="#" className="social-link">Twitter</a>
+                <a href="#" className="social-link">Instagram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
