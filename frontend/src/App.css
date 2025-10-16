@@ -1662,8 +1662,35 @@ body {
     gap: 40px;
   }
 
-  .hero-content h1 {
+  .hero-main h1 {
     font-size: 36px;
+  }
+
+  .hero-images {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .hero-image-card.blue {
+    grid-column: span 1;
+  }
+
+  .badges-grid {
+    gap: 12px;
+  }
+
+  .service-badge {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .services h2 {
+    font-size: 32px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .hero-actions {
