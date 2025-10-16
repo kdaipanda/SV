@@ -291,9 +291,6 @@ const LandingPage = ({ setView }) => {
                 Registrarse como Veterinario
                 <span className="btn-arrow">→</span>
               </button>
-              <button onClick={() => setView('login')} className="btn btn-link">
-                Iniciar Sesión →
-              </button>
             </div>
           </div>
 
