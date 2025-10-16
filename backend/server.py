@@ -161,12 +161,8 @@ class ConsultationData(BaseModel):
     medicamentos: Optional[str] = "NO"
     medicamentos_cual: Optional[str] = None
     
-    # Stage 2: Consultation details (optional at creation)
-    motivo_consulta: Optional[str] = None
-    sintomas: Optional[str] = None
-    duracion_sintomas: Optional[str] = None
-    tratamientos_previos: Optional[str] = None
-    historia_clinica: Optional[str] = None
+    # Stage 2: Detailed patient information (optional at creation)
+    detalle_paciente: Optional[str] = None
     
     # Stage 2: Clinical observations
     parametros_vitales: Optional[str] = None
