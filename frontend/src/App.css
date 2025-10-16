@@ -1965,23 +1965,32 @@ body {
 }
 
 .footer-brand h3 {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   color: white;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.footer-logo {
-  height: 24px;
-  width: auto;
-  opacity: 0.6;
-  transition: opacity 0.3s;
+.footer-contact {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-logo:hover {
-  opacity: 0.8;
+.footer-contact p {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.footer-contact strong {
+  color: #3b82f6;
 }
 
 .footer-brand p {
