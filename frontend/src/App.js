@@ -1893,11 +1893,25 @@ const NewConsultation = ({ setView }) => {
                         setConsultationId(null);
                         setAiAnalysis(null);
                         setFormData({
-                          especie: '', raza: '', edad: '', peso: '',
-                          motivo_consulta: '', sintomas: '', duracion_sintomas: '',
-                          tratamientos_previos: '', historia_clinica: '',
-                          parametros_vitales: '', ambiente_manejo: '',
-                          laboratorio_estudios: '', notas_adicionales: ''
+                          fecha: new Date().toISOString().split('T')[0],
+                          nombre_mascota: '', nombre_dueño: '', raza: '', mix: '',
+                          edad: '', peso: '', condicion_corporal: '3', sexo: '', estado_reproductivo: '',
+                          vacunas_vigentes: '', vacunas_cual: '', desparasitacion_interna: '',
+                          desparasitacion_interna_cual: '', desparasitacion_externa: '',
+                          desparasitacion_externa_producto: '', desparasitacion_externa_fecha: '',
+                          habitat: '', zona_geografica: '', alimentacion_seco: '', alimentacion_humedo: '',
+                          alimentacion_casero: '', alimentacion_frecuencia: '', paseos: '',
+                          paseos_frecuencia: '', baños_estetica: '', baños_fecha: '',
+                          cirugias_previas: '', cirugias_cual: '', aspecto_pelaje: '',
+                          aspecto_piel: '', aspecto_oidos: '', aspecto_ojos: '', aspecto_otros: '',
+                          vomito: 'NO', vomito_color: '', vomito_aspecto: '', diarrea: 'NO',
+                          diarrea_color: '', diarrea_aspecto: '', orina: 'NO', orina_color: '',
+                          orina_olor: '', secrecion_nasal: 'NO', secrecion_nasal_color: '',
+                          secrecion_nasal_aspecto: '', secrecion_ocular: 'NO', secrecion_ocular_color: '',
+                          dientes: 'limpios', dientes_otros: '', piel_condicion: 'normal',
+                          ultima_comida: '', ultima_comida_fecha: '', liquidos: '',
+                          liquidos_cantidad: '', actividad_general: 'ACTIVO', medicamentos: 'NO',
+                          medicamentos_cual: '', detalle_paciente: ''
                         });
                         setSelectedCategory('');
                       }}
