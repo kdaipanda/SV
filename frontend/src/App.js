@@ -460,8 +460,8 @@ const LandingPage = ({ setView }) => {
           <div className="cta-content">
             <h2>¿Listo para revolucionar tus consultas veterinarias?</h2>
             <p>Únete a cientos de veterinarios que ya confían en Savant Vet</p>
-            <button onClick={() => setView('register')} className="btn btn-primary btn-large">
-              Comenzar Ahora
+            <button onClick={() => setView('login')} className="btn btn-primary btn-large">
+              Iniciar Sesión
             </button>
           </div>
         </div>
