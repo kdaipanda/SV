@@ -289,13 +289,92 @@ const LandingPage = ({ setView }) => {
         </div>
       </section>
 
+      <section className="memberships">
+        <div className="container">
+          <div className="memberships-header">
+            <div className="services-badge">
+              <span className="badge-dot purple"></span>
+              Membresías
+            </div>
+            <h2>Planes diseñados para profesionales veterinarios</h2>
+            <p>Elige el plan que mejor se adapte a tu práctica profesional y volumen de consultas</p>
+          </div>
+          
+          <div className="membership-cards">
+            <div className="membership-card basic">
+              <div className="membership-header">
+                <h3>Básica</h3>
+                <div className="price">
+                  <span className="currency">$</span>
+                  <span className="amount">299</span>
+                  <span className="period">MXN/mes</span>
+                </div>
+              </div>
+              <div className="membership-features">
+                <div className="feature">✅ 10 consultas mensuales</div>
+                <div className="feature">✅ Análisis especializado por categoría</div>
+                <div className="feature">✅ Diagnósticos diferenciales</div>
+                <div className="feature">✅ Planes de tratamiento</div>
+                <div className="feature">✅ Soporte por email</div>
+              </div>
+              <button onClick={() => setView('membership')} className="btn btn-outline">
+                Seleccionar Plan
+              </button>
+            </div>
+
+            <div className="membership-card professional featured">
+              <div className="popular-badge">Más Popular</div>
+              <div className="membership-header">
+                <h3>Profesional</h3>
+                <div className="price">
+                  <span className="currency">$</span>
+                  <span className="amount">599</span>
+                  <span className="period">MXN/mes</span>
+                </div>
+              </div>
+              <div className="membership-features">
+                <div className="feature">✅ 25 consultas mensuales</div>
+                <div className="feature">✅ Todas las funciones de Básica</div>
+                <div className="feature">✅ Soporte prioritario</div>
+                <div className="feature">✅ Historial extendido</div>
+                <div className="feature">✅ Referencias bibliográficas</div>
+              </div>
+              <button onClick={() => setView('membership')} className="btn btn-primary">
+                Seleccionar Plan
+              </button>
+            </div>
+
+            <div className="membership-card premium">
+              <div className="membership-header">
+                <h3>Premium</h3>
+                <div className="price">
+                  <span className="currency">$</span>
+                  <span className="amount">999</span>
+                  <span className="period">MXN/mes</span>
+                </div>
+              </div>
+              <div className="membership-features">
+                <div className="feature">✅ Consultas ilimitadas</div>
+                <div className="feature">✅ Todas las funciones de Profesional</div>
+                <div className="feature">✅ Soporte 24/7</div>
+                <div className="feature">✅ Contenido exclusivo</div>
+                <div className="feature">✅ Análisis avanzados</div>
+              </div>
+              <button onClick={() => setView('membership')} className="btn btn-outline">
+                Seleccionar Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="cta">
         <div className="container">
           <div className="cta-content">
             <h2>¿Listo para revolucionar tus consultas veterinarias?</h2>
             <p>Únete a cientos de veterinarios que ya confían en Savant Vet</p>
             <button onClick={() => setView('register')} className="btn btn-primary btn-large">
-              Registrarse Gratis
+              Comenzar Ahora
             </button>
           </div>
         </div>
