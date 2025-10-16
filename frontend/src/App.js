@@ -385,9 +385,13 @@ const LandingPage = ({ setView }) => {
           <div className="footer-content">
             <div className="footer-section">
               <div className="footer-brand">
-                <img src="/savant_logo.png" alt="Savant Vet" className="footer-logo" />
                 <h3>Savant Vet</h3>
                 <p>Plataforma profesional de consultoría veterinaria especializada para médicos veterinarios certificados en México.</p>
+                <div className="footer-contact">
+                  <p><strong>Email:</strong> contacto@savantvet.com</p>
+                  <p><strong>Teléfono:</strong> +52 55 1234 5678</p>
+                  <p><strong>Horario:</strong> Lun - Vie 9:00 - 18:00</p>
+                </div>
               </div>
             </div>
 
