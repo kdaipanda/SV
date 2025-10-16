@@ -1762,7 +1762,19 @@ body {
 
   .vet-profile {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    padding: 16px;
+    width: 100%;
+  }
+
+  .vet-info {
+    text-align: center;
+  }
+
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
   }
 
   .status-actions {
