@@ -199,6 +199,14 @@ const Header = ({ setView, showAuth = true }) => {
                     Membresía
                   </button>
                   
+                  <div className="header-clock">
+                    <div className="clock-icon">🕐</div>
+                    <div className="clock-info">
+                      <div className="clock-time">{formatTime(currentTime)}</div>
+                      <div className="clock-date">{formatDate(currentTime)}</div>
+                    </div>
+                  </div>
+                  
                   <div className="user-menu-container">
                     <button className="user-menu-trigger" onClick={toggleUserMenu}>
                       <div className="user-avatar">
