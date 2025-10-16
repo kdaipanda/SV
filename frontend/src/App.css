@@ -285,9 +285,9 @@ body {
 }
 
 .hero {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 30%, #475569 70%, #64748b 100%);
-  color: white;
-  padding: 60px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #1e293b;
+  padding: 80px 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -297,18 +297,89 @@ body {
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-main h1 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: #1e293b;
+}
+
+.hero-main p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #64748b;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.hero-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.hero-image-card {
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-image-card.purple {
+  background: linear-gradient(135deg, #a855f7, #8b5cf6);
+  grid-row: span 1;
+}
+
+.hero-image-card.blue {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  grid-column: span 2;
+  aspect-ratio: 4/3;
+}
+
+.hero-image-card.yellow {
+  background: linear-gradient(135deg, #f59e0b, #eab308);
+  grid-row: span 1;
+}
+
+.hero-image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: all 0.3s;
+}
+
+.hero-image-card:hover img {
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 .hero .container {
