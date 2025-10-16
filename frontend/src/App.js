@@ -209,13 +209,13 @@ const LandingPage = ({ setView }) => {
 
           <div className="hero-images">
             <div className="hero-image-card purple">
-              <img src="https://images.unsplash.com/photo-1543806296-fa4b3fdfa789?w=300&h=300&fit=crop&crop=faces" alt="Gato profesional" />
+              <img src="https://images.unsplash.com/photo-1570018143689-da56c03691cd?w=400&h=400&fit=crop&crop=faces&auto=format&q=80" alt="Mascota profesional" />
             </div>
             <div className="hero-image-card blue">
-              <img src="https://images.unsplash.com/photo-1596058939740-516d0d71f3d4?w=400&h=300&fit=crop&crop=faces" alt="Veterinario con mascota" />
+              <img src="https://images.unsplash.com/photo-1596058939740-516d0d71f3d4?w=600&h=400&fit=crop&crop=faces&auto=format&q=80" alt="Veterinario profesional con mascota" />
             </div>
             <div className="hero-image-card yellow">
-              <img src="https://images.unsplash.com/photo-1553976166-ed1f57de4813?w=300&h=300&fit=crop&crop=faces" alt="Consulta veterinaria" />
+              <img src="https://images.unsplash.com/photo-1591050208162-34807da02a02?w=400&h=400&fit=crop&crop=faces&auto=format&q=80" alt="Propietario feliz con mascota" />
             </div>
           </div>
         </div>
