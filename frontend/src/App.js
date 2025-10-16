@@ -743,18 +743,8 @@ const NewConsultation = ({ setView }) => {
     medicamentos: 'NO',
     medicamentos_cual: '',
     
-    // Step 2: Consultation details
-    motivo_consulta: '',
-    sintomas: '',
-    duracion_sintomas: '',
-    tratamientos_previos: '',
-    historia_clinica: '',
-    
-    // Step 2: Clinical observations
-    parametros_vitales: '',
-    ambiente_manejo: '',
-    laboratorio_estudios: '',
-    notas_adicionales: ''
+    // Stage 2: Detailed patient information
+    detalle_paciente: ''
   });
 
   const [aiAnalysis, setAiAnalysis] = useState(null);
