@@ -196,7 +196,10 @@ const LandingPage = ({ setView }) => {
                 Registrarse como Veterinario
                 <span className="btn-arrow">→</span>
               </button>
-              <button onClick={() => setView('membership')} className="btn btn-link">
+              <button onClick={() => {
+                const section = document.getElementById('membresias');
+                section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }} className="btn btn-link">
                 Ver Membresías →
               </button>
             </div>
