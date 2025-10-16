@@ -114,6 +114,11 @@ body {
   gap: 24px;
 }
 
+/* Ensure nav menu is always visible on desktop */
+.nav-menu.mobile-hidden {
+  display: flex;
+}
+
 .menu-toggle {
   display: none;
   background: none;
