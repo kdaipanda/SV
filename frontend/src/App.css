@@ -1989,9 +1989,10 @@ body {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 40px;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 50px;
+  align-items: start;
 }
 
 .footer-section h4 {
