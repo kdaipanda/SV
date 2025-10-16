@@ -221,27 +221,27 @@ const LandingPage = ({ setView }) => {
           <div className="badges-grid">
             <div className="service-badge">
               <span className="badge-dot purple"></span>
-              Cuidado especializado
+              Solo veterinarios certificados
             </div>
             <div className="service-badge">
               <span className="badge-dot blue"></span>
-              Análisis profesional
+              Análisis clínico especializado
             </div>
             <div className="service-badge">
               <span className="badge-dot green"></span>
-              Cuidado integral
+              Diagnósticos diferenciales
             </div>
             <div className="service-badge">
               <span className="badge-dot orange"></span>
-              Prevención de enfermedades
+              Planes de tratamiento
             </div>
             <div className="service-badge">
               <span className="badge-dot teal"></span>
-              Consultoría especializada
+              Consultoría por especies
             </div>
             <div className="service-badge">
               <span className="badge-dot yellow"></span>
-              Diagnósticos avanzados
+              Evidencia científica
             </div>
           </div>
         </div>
