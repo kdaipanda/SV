@@ -104,26 +104,19 @@ const LoadingScreen = () => (
 const Header = ({ setView, showAuth = true }) => {
   const { veterinarian, logout } = useVet();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isAtTop, setIsAtTop] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Update if at top
+      // Update if at top for transparency effect
       setIsAtTop(currentScrollY < 50);
-      
-      // Keep header always visible for better usability
-      setIsHeaderVisible(true);
-      
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
