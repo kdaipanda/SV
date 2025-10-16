@@ -1804,103 +1804,21 @@ const NewConsultation = ({ setView }) => {
 
             <form onSubmit={handleSubmitStep2} className="consultation-form">
               <div className="form-section">
-                <h3>Motivo de Consulta</h3>
+                <h3>Detalle del Paciente</h3>
                 <div className="form-group">
-                  <label>Motivo Principal *</label>
+                  <label>ANOTA CON EL MAYOR DETALLE LOS DATOS SOBRE EL PACIENTE. *SEA MUY ESPECÍFICO</label>
                   <textarea
                     required
-                    rows={3}
-                    value={formData.motivo_consulta}
-                    onChange={(e) => setFormData({...formData, motivo_consulta: e.target.value})}
-                    placeholder="Describa el motivo principal de la consulta..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Síntomas Principales *</label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formData.sintomas}
-                    onChange={(e) => setFormData({...formData, sintomas: e.target.value})}
-                    placeholder="Describa los síntomas observados..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Duración de los Síntomas *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.duracion_sintomas}
-                    onChange={(e) => setFormData({...formData, duracion_sintomas: e.target.value})}
-                    placeholder="3 días, 2 semanas, crónico..."
-                  />
-                </div>
-              </div>
-
-              <div className="form-section">
-                <h3>Historia y Tratamientos</h3>
-                <div className="form-group">
-                  <label>Tratamientos Previos</label>
-                  <textarea
-                    rows={3}
-                    value={formData.tratamientos_previos}
-                    onChange={(e) => setFormData({...formData, tratamientos_previos: e.target.value})}
-                    placeholder="Medicamentos, tratamientos o intervenciones realizadas..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Historia Clínica Relevante</label>
-                  <textarea
-                    rows={4}
-                    value={formData.historia_clinica}
-                    onChange={(e) => setFormData({...formData, historia_clinica: e.target.value})}
-                    placeholder="Antecedentes médicos, cirugías previas, condiciones crónicas..."
-                  />
-                </div>
-              </div>
-
-              <div className="form-section">
-                <h3>Observaciones Clínicas</h3>
-                <div className="form-group">
-                  <label>Signos Vitales</label>
-                  <textarea
-                    rows={3}
-                    value={formData.parametros_vitales}
-                    onChange={(e) => setFormData({...formData, parametros_vitales: e.target.value})}
-                    placeholder="Temperatura, frecuencia cardíaca, frecuencia respiratoria, presión arterial..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Laboratorio y Estudios</label>
-                  <textarea
-                    rows={3}
-                    value={formData.laboratorio_estudios}
-                    onChange={(e) => setFormData({...formData, laboratorio_estudios: e.target.value})}
-                    placeholder="Hemograma, bioquímica, radiografías, ecografías, otros estudios..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Ambiente y Manejo</label>
-                  <textarea
-                    rows={3}
-                    value={formData.ambiente_manejo}
-                    onChange={(e) => setFormData({...formData, ambiente_manejo: e.target.value})}
-                    placeholder="Condiciones de alojamiento, alimentación, contacto con otros animales..."
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Notas Adicionales</label>
-                  <textarea
-                    rows={3}
-                    value={formData.notas_adicionales}
-                    onChange={(e) => setFormData({...formData, notas_adicionales: e.target.value})}
-                    placeholder="Cualquier información adicional relevante..."
+                    rows={20}
+                    value={formData.detalle_paciente}
+                    onChange={(e) => setFormData({...formData, detalle_paciente: e.target.value})}
+                    placeholder="Escriba aquí todos los detalles sobre el paciente, motivo de consulta, síntomas, observaciones clínicas, signos vitales, tratamientos previos, historia clínica, estudios realizados, comportamiento, y cualquier otra información relevante para el diagnóstico..."
+                    style={{
+                      minHeight: '400px',
+                      fontSize: '16px',
+                      lineHeight: '1.6',
+                      padding: '20px'
+                    }}
                   />
                 </div>
               </div>
