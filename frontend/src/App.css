@@ -2504,4 +2504,244 @@ body {
     transform: translateY(-4px);
   }
 }
+
+
+/* ===== MOBILE OPTIMIZATIONS ===== */
+
+/* Hero Section Mobile */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 0 60px 0;
+    min-height: auto;
+  }
+  
+  .hero-content {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .hero-main {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  
+  .hero-main h1 {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  
+  .hero-main p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .hero-images {
+    display: none;
+  }
+}
+
+/* Header Mobile */
+@media (max-width: 768px) {
+  .header {
+    padding: 16px 0;
+  }
+  
+  .nav-brand h1 {
+    font-size: 20px;
+  }
+  
+  .logo-image {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  
+  .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 14px 16px;
+  }
+  
+  .header-clock {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 12px;
+  }
+}
+
+/* Services Section Mobile */
+@media (max-width: 768px) {
+  .services {
+    padding: 60px 0;
+  }
+  
+  .services h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 20px;
+  }
+  
+  .service-card {
+    padding: 28px 24px;
+  }
+}
+
+/* CTA Section Mobile */
+@media (max-width: 768px) {
+  .cta {
+    padding: 60px 20px;
+  }
+  
+  .cta-content h2 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  
+  .cta-content p {
+    font-size: 16px;
+  }
+  
+  .cta-content .btn {
+    width: 100%;
+  }
+}
+
+/* Login/Register Forms Mobile */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 20px;
+  }
+  
+  .auth-card {
+    padding: 32px 24px;
+    margin: 0;
+  }
+  
+  .auth-card h2 {
+    font-size: 28px;
+  }
+  
+  .form-group {
+    margin-bottom: 18px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .btn {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+}
+
+/* Dashboard Mobile */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 28px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+  }
+}
+
+/* Consultation Form Mobile */
+@media (max-width: 768px) {
+  .consultation-form-container {
+    padding: 20px;
+  }
+  
+  .step-indicator {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .step {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+  
+  .consultation-form {
+    padding: 24px 20px;
+  }
+  
+  .form-section h3 {
+    font-size: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+  
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Extra Small Devices (iPhone SE, etc) */
+@media (max-width: 375px) {
+  .hero-main h1 {
+    font-size: 28px;
+  }
+  
+  .hero-main p {
+    font-size: 15px;
+  }
+  
+  .services h2,
+  .cta-content h2 {
+    font-size: 26px;
+  }
+  
+  .auth-card {
+    padding: 28px 20px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
+}
+
 }
