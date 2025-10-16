@@ -158,8 +158,14 @@ const Header = ({ setView, showAuth = true }) => {
                     Membresía
                   </button>
                   <div className="vet-profile">
-                    <span>{veterinarian.nombre}</span>
-                    <button onClick={() => { logout(); setIsMenuOpen(false); }} className="logout-btn">Salir</button>
+                    <div className="vet-info">
+                      <span className="vet-name">{veterinarian.nombre}</span>
+                      <span className="vet-membership">{veterinarian.membership_type || 'Sin membresía'}</span>
+                    </div>
+                    <button onClick={() => { logout(); setIsMenuOpen(false); }} className="logout-btn">
+                      <span className="logout-icon">👋</span>
+                      Cerrar Sesión
+                    </button>
                   </div>
                 </>
               ) : (
