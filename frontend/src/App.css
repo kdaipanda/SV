@@ -1974,8 +1974,14 @@ body {
 }
 
 .footer-logo {
-  height: 32px;
+  height: 24px;
   width: auto;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.footer-logo:hover {
+  opacity: 0.8;
 }
 
 .footer-brand p {
