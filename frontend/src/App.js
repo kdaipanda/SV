@@ -258,39 +258,47 @@ const LandingPage = ({ setView }) => {
         </div>
       </section>
 
-      <section className="features">
+      <section className="services">
         <div className="container">
-          <h2>¿Por qué elegir Savant Vet?</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🐕</div>
-              <h3>Especialización por Especies</h3>
-              <p>Sistemas especializados en pequeñas especies, producción, equinos y exóticos</p>
+          <div className="services-badge">
+            <span className="badge-dot orange"></span>
+            Servicios que ofrecemos
+          </div>
+          
+          <h2>Servicios veterinarios adaptados a las necesidades de tus pacientes</h2>
+          
+          <div className="services-grid">
+            <div className="service-card">
+              <div className="service-icon yellow">
+                <span>🔬</span>
+              </div>
+              <h3>Análisis preventivo para la salud de por vida</h3>
+              <p>El análisis preventivo es vital para mantener a las mascotas sanas mediante chequeos regulares y tratamientos balanceados durante toda su vida.</p>
+              <button onClick={() => setView('register')} className="btn btn-dark">
+                Reservar servicio
+              </button>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">📋</div>
-              <h3>Proceso Estructurado</h3>
-              <p>Flujo de consulta en 3 etapas: cuestionario, observaciones clínicas y análisis especializado</p>
+            
+            <div className="service-card">
+              <div className="service-icon blue">
+                <span>🐕</span>
+              </div>
+              <h3>Consultas especializadas para tus pacientes</h3>
+              <p>Los servicios de consulta son esenciales para la salud pública. Juegan un papel crucial en la preservación de la propagación de enfermedades infecciosas.</p>
+              <button onClick={() => setView('register')} className="btn btn-dark">
+                Reservar servicio
+              </button>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">📚</div>
-              <h3>Basado en Evidencia</h3>
-              <p>Recomendaciones respaldadas por literatura científica y protocolos actualizados</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🔒</div>
-              <h3>Solo para Profesionales</h3>
-              <p>Verificación de cédula profesional mexicana para garantizar calidad</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">💼</div>
-              <h3>Membresías Flexibles</h3>
-              <p>Planes adaptados a diferentes volúmenes de consulta y necesidades</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">📱</div>
-              <h3>Interfaz Moderna</h3>
-              <p>Diseño profesional optimizado para el flujo de trabajo veterinario</p>
+            
+            <div className="service-card">
+              <div className="service-icon orange">
+                <span>⚕️</span>
+              </div>
+              <h3>Servicios médicos especializados</h3>
+              <p>Los servicios médicos especializados brindan una atención integral con experiencia y cuidado, priorizando diversos métodos de beneficios para las mascotas.</p>
+              <button onClick={() => setView('register')} className="btn btn-dark">
+                Reservar servicio
+              </button>
             </div>
           </div>
         </div>
