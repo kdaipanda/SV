@@ -2333,15 +2333,15 @@ body {
 }
 
 .footer-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  gap: 50px;
-  margin-bottom: 50px;
-  align-items: start;
-  padding: 0 20px;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr !important;
+  gap: 50px !important;
+  margin-bottom: 50px !important;
+  align-items: start !important;
+  padding: 0 20px !important;
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
