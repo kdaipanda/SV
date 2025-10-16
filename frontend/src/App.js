@@ -188,7 +188,6 @@ const LandingPage = ({ setView }) => {
       <section className="hero">
         <div className="container">
           <div className="hero-badge">
-            <span className="badge-dot"></span>
             Savant Vet Solutions
           </div>
           
