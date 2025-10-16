@@ -70,7 +70,8 @@ body {
 }
 
 .header.hidden {
-  transform: translateY(-100%);
+  /* Disabled auto-hide for better usability */
+  /* transform: translateY(-100%); */
 }
 
 .header.transparent {
