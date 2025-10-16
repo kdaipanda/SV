@@ -135,7 +135,7 @@ const Header = ({ setView, showAuth = true }) => {
             <button className="menu-toggle" onClick={toggleMenu}>
               {isMenuOpen ? '✕' : '☰'}
             </button>
-            <nav className={`nav-menu ${isMenuOpen ? 'mobile-visible' : 'mobile-hidden'}`}>
+            <nav className="nav-menu">
               {veterinarian ? (
                 <>
                   <button onClick={() => { setView('dashboard'); setIsMenuOpen(false); }} className="nav-link">
