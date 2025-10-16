@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import './App.css';
+import './Custom.css';
 
 // Context for veterinarian authentication
 const VetContext = createContext();
