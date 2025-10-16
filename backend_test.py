@@ -13,7 +13,7 @@ import sys
 import os
 
 # Test configuration
-BASE_URL = "https://vetmedpro.preview.emergentagent.com"
+BASE_URL = "https://vetcare-pro-1.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 # Test data for Mexican veterinary professionals (will be generated dynamically)
