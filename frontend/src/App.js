@@ -187,10 +187,6 @@ const LandingPage = ({ setView }) => {
       
       <section className="hero">
         <div className="container">
-          <div className="hero-badge">
-            Savant Vet Solutions
-          </div>
-          
           <div className="hero-main">
             <h1>Tu socio confiable para el bienestar de las mascotas</h1>
             <p>En nuestra plataforma, priorizamos la salud y felicidad de tus pacientes. Nuestro equipo de especialistas dedicados está comprometido a brindar análisis profesionales basados en amor.</p>
