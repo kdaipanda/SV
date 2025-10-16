@@ -1869,12 +1869,13 @@ body {
 
 .membership-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
-  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 30px 60px rgba(59, 130, 246, 0.35), 
+              inset 0 0 90px rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.7);
 }
 
 .membership-card:hover::before {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.12) 100%);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(37, 99, 235, 0.22) 100%);
 }
 
 .membership-card.featured:hover {
