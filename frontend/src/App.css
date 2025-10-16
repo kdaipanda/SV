@@ -1842,8 +1842,10 @@ body {
 
 .membership-card.featured {
   border-color: #3b82f6;
-  transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+  transform: scale(1.08);
+  box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-width: 3px;
 }
 
 .membership-card:hover {
