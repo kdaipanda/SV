@@ -2236,10 +2236,13 @@ const ConsultationHistory = ({ setView }) => {
 
           <div className="consultation-detail">
             <div className="detail-section">
-              <h3>Información del Paciente</h3>
+              <h3>🐾 Información del Paciente</h3>
               <div className="detail-grid">
                 <div className="detail-item">
-                  <strong>Especie:</strong> {selectedConsultation.especie}
+                  <strong>Nombre:</strong> {selectedConsultation.nombre_mascota}
+                </div>
+                <div className="detail-item">
+                  <strong>Propietario:</strong> {selectedConsultation.nombre_dueno}
                 </div>
                 <div className="detail-item">
                   <strong>Raza:</strong> {selectedConsultation.raza}
@@ -2250,22 +2253,28 @@ const ConsultationHistory = ({ setView }) => {
                 <div className="detail-item">
                   <strong>Peso:</strong> {selectedConsultation.peso}
                 </div>
+                <div className="detail-item">
+                  <strong>Sexo:</strong> {selectedConsultation.sexo}
+                </div>
+                <div className="detail-item">
+                  <strong>Estado Reproductivo:</strong> {selectedConsultation.estado_reproductivo}
+                </div>
+                <div className="detail-item">
+                  <strong>Condición Corporal:</strong> {selectedConsultation.condicion_corporal}
+                </div>
               </div>
             </div>
 
             <div className="detail-section">
-              <h3>Motivo de Consulta</h3>
-              <p>{selectedConsultation.motivo_consulta}</p>
-            </div>
-
-            <div className="detail-section">
-              <h3>Síntomas</h3>
-              <p>{selectedConsultation.sintomas}</p>
+              <h3>📋 Detalle del Paciente</h3>
+              <div className="detail-text">
+                {selectedConsultation.detalle_paciente}
+              </div>
             </div>
 
             {selectedConsultation.ai_analysis && (
-              <div className="detail-section">
-                <h3>Análisis Especializado</h3>
+              <div className="detail-section analysis-section">
+                <h3>🤖 Análisis Especializado</h3>
                 <div className="analysis-content">
                   <pre className="analysis-text">{selectedConsultation.ai_analysis}</pre>
                 </div>
