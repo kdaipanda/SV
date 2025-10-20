@@ -2297,16 +2297,31 @@ const ConsultationHistory = ({ setView }) => {
             {consultations.map((consultation) => (
               <div key={consultation.id} className="consultation-card">
                 <div className="consultation-header">
-                  <h3>{consultation.especie} - {consultation.raza}</h3>
-                  <span className={`status ${consultation.status}`}>
-                    {consultation.status === 'completed' ? 'Completada' : 
-                     consultation.status === 'in_progress' ? 'En Progreso' : 'Borrador'}
+                  <h3>🐾 {consultation.nombre_mascota || 'Sin nombre'}</h3>
+                  <span className="consultation-date">
+                    {new Date(consultation.created_at || consultation.fecha).toLocaleDateString('es-MX', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
                   </span>
                 </div>
                 
                 <div className="consultation-content">
-                  <p><strong>Motivo:</strong> {consultation.motivo_consulta}</p>
-                  <p><strong>Fecha:</strong> {new Date(consultation.created_at).toLocaleDateString()}</p>
+                  <div className="detail-row">
+                    <strong>Propietario:</strong> {consultation.nombre_dueno || 'No especificado'}
+                  </div>
+                  <div className="detail-row">
+                    <strong>Raza:</strong> {consultation.raza || 'No especificada'}
+                  </div>
+                  <div className="detail-row">
+                    <strong>Edad:</strong> {consultation.edad || 'No especificada'}
+                  </div>
+                  <div className="detail-row">
+                    <strong>Motivo:</strong> {consultation.detalle_paciente ? 
+                      consultation.detalle_paciente.substring(0, 80) + '...' : 
+                      'Sin detalles'}
+                  </div>
                 </div>
                 
                 <div className="consultation-actions">
@@ -2314,7 +2329,7 @@ const ConsultationHistory = ({ setView }) => {
                     onClick={() => handleViewConsultation(consultation.id)}
                     className="btn btn-secondary"
                   >
-                    Ver Detalles
+                    Ver Análisis Completo
                   </button>
                 </div>
               </div>
