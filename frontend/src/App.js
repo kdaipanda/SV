@@ -85,6 +85,7 @@ const Router = () => {
     'dashboard': <Dashboard setView={setCurrentView} />,
     'new-consultation': <NewConsultation setView={setCurrentView} />,
     'consultation-history': <ConsultationHistory setView={setCurrentView} />,
+    'medical-images': <MedicalImageInterpretation setView={setCurrentView} />,
     'membership': <MembershipPage setView={setCurrentView} />,
     'payment-success': <PaymentSuccess setView={setCurrentView} />,
     'profile': <Profile setView={setCurrentView} />
