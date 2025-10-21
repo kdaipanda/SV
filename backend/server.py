@@ -429,7 +429,8 @@ async def analyze_consultation(consultation_id: str):
 async def get_consultation_history(vet_id: str):
     """Get consultation history for veterinarian"""
     consultations = await db.consultations.find(
-        {"veterinarian_id": vet_id}
+        {"veterinarian_id": vet_id},
+        {"_id": 0}  # Exclude MongoDB's _id field
     ).sort("created_at", -1).to_list(length=None)
     
     return {"consultations": consultations}
@@ -437,7 +438,10 @@ async def get_consultation_history(vet_id: str):
 @app.get("/api/consultations/{consultation_id}", response_model=ConsultationData)
 async def get_consultation(consultation_id: str):
     """Get specific consultation"""
-    consultation = await db.consultations.find_one({"id": consultation_id})
+    consultation = await db.consultations.find_one(
+        {"id": consultation_id},
+        {"_id": 0}  # Exclude MongoDB's _id field
+    )
     if not consultation:
         raise HTTPException(status_code=404, detail="Consulta no encontrada")
     
