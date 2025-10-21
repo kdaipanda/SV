@@ -2274,6 +2274,9 @@ const ConsultationHistory = ({ setView }) => {
             <button onClick={() => setSelectedConsultation(null)} className="back-btn">
               ← Volver al Historial
             </button>
+            <div className="consultation-id-badge">
+              ID: {selectedConsultation.consultation_number || 'N/A'}
+            </div>
             <h1>Detalle de Consulta</h1>
             <p>Consulta del {new Date(selectedConsultation.created_at).toLocaleDateString()}</p>
           </div>
