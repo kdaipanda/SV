@@ -447,6 +447,30 @@ async def get_consultation_history(vet_id: str):
     
     return {"consultations": consultations}
 
+@app.get("/api/consultations/{vet_id}/search")
+async def search_consultations(vet_id: str, query: str):
+    """Search consultations by ID, patient name, or owner name"""
+    if not query or len(query) < 2:
+        return {"consultations": []}
+    
+    # Create search filter using $or for multiple fields
+    search_filter = {
+        "veterinarian_id": vet_id,
+        "$or": [
+            {"consultation_number": {"$regex": query, "$options": "i"}},
+            {"nombre_mascota": {"$regex": query, "$options": "i"}},
+            {"nombre_dueno": {"$regex": query, "$options": "i"}},
+            {"raza": {"$regex": query, "$options": "i"}}
+        ]
+    }
+    
+    consultations = await db.consultations.find(
+        search_filter,
+        {"_id": 0}
+    ).sort("created_at", -1).limit(50).to_list(length=50)
+    
+    return {"consultations": consultations}
+
 @app.get("/api/consultations/{consultation_id}", response_model=ConsultationData)
 async def get_consultation(consultation_id: str):
     """Get specific consultation"""
