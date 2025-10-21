@@ -99,6 +99,9 @@ class ConsultationData(BaseModel):
     veterinarian_id: str
     category: str
     
+    class Config:
+        arbitrary_types_allowed = True
+    
     # Stage 1: Complete pet information
     fecha: str
     nombre_mascota: str
