@@ -899,6 +899,15 @@ const Dashboard = ({ setView }) => {
                 <p>Consultas previas y resultados</p>
               </button>
               
+              {veterinarian.membership_type?.toLowerCase() === 'premium' && (
+                <button onClick={() => setView('medical-images')} className="action-card premium-feature">
+                  <div className="action-icon">🔬</div>
+                  <h3>Interpretar Imágenes</h3>
+                  <p>Rayos X y análisis de laboratorio</p>
+                  <span className="premium-badge">PREMIUM</span>
+                </button>
+              )}
+              
               <button onClick={() => setView('membership')} className="action-card">
                 <div className="action-icon">⭐</div>
                 <h3>Membresía</h3>
