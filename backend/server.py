@@ -301,6 +301,13 @@ async def get_animal_categories():
     """Get available animal categories"""
     return {"categories": ANIMAL_CATEGORIES}
 
+async def generate_consultation_number(vet_id: str):
+    """Generate a sequential consultation number for a veterinarian"""
+    # Get the count of existing consultations for this vet
+    count = await db.consultations.count_documents({"veterinarian_id": vet_id})
+    # Generate number like CONS-0001, CONS-0002, etc.
+    return f"CONS-{str(count + 1).zfill(4)}"
+
 @app.post("/api/consultations", response_model=ConsultationData)
 async def create_consultation(consultation_request: ConsultationRequest):
     """Create a new consultation (Stage 1: Initial questionnaire)"""
@@ -308,9 +315,13 @@ async def create_consultation(consultation_request: ConsultationRequest):
     # Verify veterinarian membership
     await verify_veterinarian_membership(consultation_request.veterinarian_id)
     
+    # Generate consultation number
+    consultation_number = await generate_consultation_number(consultation_request.veterinarian_id)
+    
     consultation = ConsultationData(
         veterinarian_id=consultation_request.veterinarian_id,
         category=consultation_request.category,
+        consultation_number=consultation_number,
         **consultation_request.consultation_data
     )
     
