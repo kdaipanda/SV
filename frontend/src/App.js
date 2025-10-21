@@ -2197,12 +2197,23 @@ const NewConsultation = ({ setView }) => {
 const ConsultationHistory = ({ setView }) => {
   const { veterinarian } = useVet();
   const [consultations, setConsultations] = useState([]);
+  const [filteredConsultations, setFilteredConsultations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedConsultation, setSelectedConsultation] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     loadConsultations();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.length >= 2) {
+      handleSearch(searchQuery);
+    } else {
+      setFilteredConsultations(consultations);
+    }
+  }, [searchQuery, consultations]);
 
   const loadConsultations = async () => {
     try {
@@ -2210,11 +2221,34 @@ const ConsultationHistory = ({ setView }) => {
       if (response.ok) {
         const data = await response.json();
         setConsultations(data.consultations || []);
+        setFilteredConsultations(data.consultations || []);
       }
     } catch (error) {
       console.error('Error loading consultations:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSearch = async (query) => {
+    if (query.length < 2) {
+      setFilteredConsultations(consultations);
+      return;
+    }
+
+    setSearching(true);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/consultations/${veterinarian.id}/search?query=${encodeURIComponent(query)}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setFilteredConsultations(data.consultations || []);
+      }
+    } catch (error) {
+      console.error('Error searching consultations:', error);
+    } finally {
+      setSearching(false);
     }
   };
 
