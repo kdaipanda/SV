@@ -2368,6 +2368,364 @@ const ConsultationHistory = ({ setView }) => {
   );
 };
 
+
+
+// Medical Image Interpretation Component (Premium Only)
+const MedicalImageInterpretation = ({ setView }) => {
+  const { veterinarian } = useVet();
+  const [imageType, setImageType] = useState('xray');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const [patientName, setPatientName] = useState('');
+  const [additionalContext, setAdditionalContext] = useState('');
+  const [consultationId, setConsultationId] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState('');
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+
+  useEffect(() => {
+    if (veterinarian.membership_type?.toLowerCase() !== 'premium') {
+      setError('Esta función es exclusiva para miembros Premium');
+    } else {
+      loadHistory();
+    }
+  }, [veterinarian]);
+
+  const loadHistory = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/medical-images/history/${veterinarian.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setHistory(data.interpretations || []);
+      }
+    } catch (error) {
+      console.error('Error loading history:', error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        setError('La imagen es demasiado grande. Máximo 10MB.');
+        return;
+      }
+      
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setError('');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!imageFile) {
+      setError('Por favor selecciona una imagen');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setResult(null);
+
+    try {
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(imageFile);
+      
+      reader.onload = async () => {
+        const base64String = reader.result.split(',')[1];
+        
+        const requestData = {
+          veterinarian_id: veterinarian.id,
+          image_base64: base64String,
+          image_type: imageType,
+          patient_name: patientName || null,
+          consultation_id: consultationId || null,
+          additional_context: additionalContext || null
+        };
+
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/medical-images/interpret`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || 'Error al interpretar imagen');
+        }
+
+        const data = await response.json();
+        setResult(data);
+        loadHistory();
+        
+        // Clear form
+        setImageFile(null);
+        setImagePreview('');
+        setPatientName('');
+        setAdditionalContext('');
+        setConsultationId('');
+      };
+      
+      reader.onerror = () => {
+        throw new Error('Error al leer la imagen');
+      };
+      
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (veterinarian.membership_type?.toLowerCase() !== 'premium') {
+    return (
+      <div className="medical-images-page">
+        <Header setView={setView} />
+        <div className="container">
+          <div className="premium-required">
+            <div className="premium-icon">🔒</div>
+            <h2>Función Premium Requerida</h2>
+            <p>La interpretación de imágenes médicas con IA está disponible exclusivamente para miembros Premium.</p>
+            <button onClick={() => setView('membership')} className="btn btn-primary">
+              Ver Planes Premium
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="medical-images-page">
+      <Header setView={setView} />
+      
+      <div className="container">
+        <div className="page-header">
+          <h1>🔬 Interpretación de Imágenes Médicas</h1>
+          <p>Análisis con IA de rayos X, pruebas de laboratorio y urianálisis</p>
+          <button onClick={() => setShowHistory(!showHistory)} className="btn btn-secondary">
+            {showHistory ? 'Nueva Interpretación' : 'Ver Historial'}
+          </button>
+        </div>
+
+        {!showHistory ? (
+          <div className="image-interpretation-form">
+            <form onSubmit={handleSubmit}>
+              <div className="form-section">
+                <h3>Tipo de Imagen</h3>
+                <div className="image-type-selector">
+                  <label className={`type-option ${imageType === 'xray' ? 'selected' : ''}`}>
+                    <input
+                      type="radio"
+                      value="xray"
+                      checked={imageType === 'xray'}
+                      onChange={(e) => setImageType(e.target.value)}
+                    />
+                    <div className="type-content">
+                      <div className="type-icon">📷</div>
+                      <span>Rayos X</span>
+                    </div>
+                  </label>
+                  
+                  <label className={`type-option ${imageType === 'blood_test' ? 'selected' : ''}`}>
+                    <input
+                      type="radio"
+                      value="blood_test"
+                      checked={imageType === 'blood_test'}
+                      onChange={(e) => setImageType(e.target.value)}
+                    />
+                    <div className="type-content">
+                      <div className="type-icon">🩸</div>
+                      <span>Análisis de Sangre</span>
+                    </div>
+                  </label>
+                  
+                  <label className={`type-option ${imageType === 'urinalysis' ? 'selected' : ''}`}>
+                    <input
+                      type="radio"
+                      value="urinalysis"
+                      checked={imageType === 'urinalysis'}
+                      onChange={(e) => setImageType(e.target.value)}
+                    />
+                    <div className="type-content">
+                      <div className="type-icon">🧪</div>
+                      <span>Urianálisis</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h3>Cargar Imagen</h3>
+                <div className="image-upload-area">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="file-input"
+                    id="image-upload"
+                  />
+                  <label htmlFor="image-upload" className="file-upload-label">
+                    {imagePreview ? (
+                      <img src={imagePreview} alt="Preview" className="image-preview" />
+                    ) : (
+                      <div className="upload-placeholder">
+                        <div className="upload-icon">📁</div>
+                        <p>Click para seleccionar imagen</p>
+                        <small>JPG, PNG - Máximo 10MB</small>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Nombre del Paciente (Opcional)</label>
+                  <input
+                    type="text"
+                    value={patientName}
+                    onChange={(e) => setPatientName(e.target.value)}
+                    placeholder="Ej: Max, Luna, Rocky"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>ID de Consulta Previa (Opcional)</label>
+                  <input
+                    type="text"
+                    value={consultationId}
+                    onChange={(e) => setConsultationId(e.target.value)}
+                    placeholder="Para incluir historial del paciente"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Contexto Adicional (Opcional)</label>
+                <textarea
+                  value={additionalContext}
+                  onChange={(e) => setAdditionalContext(e.target.value)}
+                  placeholder="Información adicional relevante para la interpretación..."
+                  rows="4"
+                />
+              </div>
+
+              {error && <div className="error-message">{error}</div>}
+
+              <div className="form-actions">
+                <button type="button" onClick={() => setView('dashboard')} className="btn btn-secondary">
+                  Cancelar
+                </button>
+                <button type="submit" disabled={loading || !imageFile} className="btn btn-primary">
+                  {loading ? 'Analizando...' : 'Interpretar Imagen'}
+                </button>
+              </div>
+            </form>
+
+            {result && (
+              <div className="interpretation-result">
+                <h2>Resultado de la Interpretación</h2>
+                
+                <div className="result-section">
+                  <h3>🔍 Hallazgos Principales</h3>
+                  <div className="result-content">
+                    {result.findings || 'Ver análisis detallado abajo'}
+                  </div>
+                </div>
+
+                <div className="result-section">
+                  <h3>💊 Recomendaciones</h3>
+                  <div className="result-content">
+                    {result.recommendations || 'Ver análisis detallado abajo'}
+                  </div>
+                </div>
+
+                <div className="result-section detailed">
+                  <h3>📊 Análisis Detallado</h3>
+                  <div className="result-content detailed-analysis">
+                    <pre>{result.detailed_analysis}</pre>
+                  </div>
+                </div>
+
+                <div className="result-actions">
+                  <button onClick={() => setResult(null)} className="btn btn-secondary">
+                    Nueva Interpretación
+                  </button>
+                  <button onClick={() => setShowHistory(true)} className="btn btn-primary">
+                    Ver Historial
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="interpretation-history">
+            <h2>Historial de Interpretaciones</h2>
+            {history.length > 0 ? (
+              <div className="history-grid">
+                {history.map((item) => (
+                  <div key={item.id} className="history-card">
+                    <div className="history-header">
+                      <div className="history-type">
+                        {item.image_type === 'xray' && '📷 Rayos X'}
+                        {item.image_type === 'blood_test' && '🩸 Análisis de Sangre'}
+                        {item.image_type === 'urinalysis' && '🧪 Urianálisis'}
+                      </div>
+                      <div className="history-date">
+                        {new Date(item.created_at).toLocaleDateString('es-MX', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                    {item.patient_name && (
+                      <div className="history-patient">
+                        <strong>Paciente:</strong> {item.patient_name}
+                      </div>
+                    )}
+                    <div className="history-preview">
+                      {item.findings ? item.findings.substring(0, 150) + '...' : item.detailed_analysis.substring(0, 150) + '...'}
+                    </div>
+                    <button 
+                      onClick={() => {
+                        setResult(item);
+                        setShowHistory(false);
+                      }} 
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Ver Completo
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <div className="empty-icon">🔬</div>
+                <h3>No hay interpretaciones aún</h3>
+                <p>Comienza subiendo tu primera imagen médica</p>
+                <button onClick={() => setShowHistory(false)} className="btn btn-primary">
+                  Nueva Interpretación
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // Membership Page
 const MembershipPage = ({ setView }) => {
   const { veterinarian } = useVet();
