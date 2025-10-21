@@ -2424,11 +2424,13 @@ const ConsultationHistory = ({ setView }) => {
         ) : (
           <div className="empty-state">
             <div className="empty-icon">📋</div>
-            <h3>No hay consultas aún</h3>
-            <p>Comienza creando tu primera consulta veterinaria</p>
-            <button onClick={() => setView('new-consultation')} className="btn btn-primary">
-              Crear Primera Consulta
-            </button>
+            <h3>{searchQuery ? 'No se encontraron consultas' : 'No hay consultas aún'}</h3>
+            <p>{searchQuery ? 'Intenta con otro término de búsqueda' : 'Comienza creando tu primera consulta veterinaria'}</p>
+            {!searchQuery && (
+              <button onClick={() => setView('new-consultation')} className="btn btn-primary">
+                Crear Primera Consulta
+              </button>
+            )}
           </div>
         )}
       </div>
