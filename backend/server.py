@@ -96,6 +96,7 @@ class LoginRequest(BaseModel):
 
 class ConsultationData(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    consultation_number: Optional[str] = None  # Human-readable ID like CONS-0001
     veterinarian_id: str
     category: str
     
