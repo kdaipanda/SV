@@ -2341,17 +2341,47 @@ const ConsultationHistory = ({ setView }) => {
         <div className="page-header">
           <h1>Historial de Consultas</h1>
           <p>Todas tus consultas veterinarias realizadas</p>
+        </div>
+
+        <div className="search-bar">
+          <div className="search-input-wrapper">
+            <span className="search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar por ID (CONS-0001), nombre de mascota, propietario o raza..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            {searchQuery && (
+              <button 
+                className="clear-search-btn"
+                onClick={() => setSearchQuery('')}
+              >
+                ✕
+              </button>
+            )}
+          </div>
           <button onClick={() => setView('new-consultation')} className="btn btn-primary">
             Nueva Consulta
           </button>
         </div>
 
+        {searching && (
+          <div className="searching-indicator">Buscando...</div>
+        )}
+
         {loading ? (
           <div className="loading-state">Cargando historial...</div>
-        ) : consultations.length > 0 ? (
+        ) : filteredConsultations.length > 0 ? (
           <div className="consultations-grid">
-            {consultations.map((consultation) => (
+            {filteredConsultations.map((consultation) => (
               <div key={consultation.id} className="consultation-card">
+                <div className="consultation-id-header">
+                  <span className="consultation-id">
+                    {consultation.consultation_number || 'ID-N/A'}
+                  </span>
+                </div>
                 <div className="consultation-header">
                   <h3>🐾 {consultation.nombre_mascota || 'Sin nombre'}</h3>
                   <span className="consultation-date">
