@@ -316,7 +316,8 @@ async def create_consultation(consultation_request: ConsultationRequest):
     consultation_data = prepare_for_mongo(consultation.dict())
     await db.consultations.insert_one(consultation_data)
     
-    return consultation
+    # Return without MongoDB's _id field
+    return ConsultationData(**consultation.dict())
 
 @app.put("/api/consultations/{consultation_id}/observations")
 async def update_consultation_observations(consultation_id: str, observations: Dict[str, Any]):
