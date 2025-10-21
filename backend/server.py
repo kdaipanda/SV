@@ -439,6 +439,192 @@ async def get_consultation(consultation_id: str):
     
     return ConsultationData(**consultation)
 
+
+# Medical Image Interpretation Models
+class ImageInterpretationRequest(BaseModel):
+    veterinarian_id: str
+    image_base64: str
+    image_type: str  # "xray", "blood_test", "urinalysis"
+    patient_name: Optional[str] = None
+    patient_id: Optional[str] = None
+    consultation_id: Optional[str] = None
+    additional_context: Optional[str] = None
+
+class ImageInterpretationResponse(BaseModel):
+    id: str
+    findings: str
+    recommendations: str
+    detailed_analysis: str
+    created_at: str
+
+# Medical Image Interpretation Endpoint (Premium Only)
+@app.post("/api/medical-images/interpret", response_model=ImageInterpretationResponse)
+async def interpret_medical_image(request: ImageInterpretationRequest):
+    """Interpret medical images (X-rays, lab results) using AI - Premium Only"""
+    
+    # Verify veterinarian exists and has Premium membership
+    vet = await db.veterinarians.find_one({"id": request.veterinarian_id})
+    if not vet:
+        raise HTTPException(status_code=404, detail="Veterinario no encontrado")
+    
+    if vet.get("membership_type", "").lower() != "premium":
+        raise HTTPException(
+            status_code=403, 
+            detail="Esta función es exclusiva para miembros Premium. Actualiza tu membresía para acceder."
+        )
+    
+    # Get patient history if consultation_id is provided
+    patient_history = ""
+    if request.consultation_id:
+        consultation = await db.consultations.find_one({"id": request.consultation_id})
+        if consultation:
+            patient_history = f"""
+            **Contexto del Paciente:**
+            - Nombre: {consultation.get('nombre_mascota', 'N/A')}
+            - Raza: {consultation.get('raza', 'N/A')}
+            - Edad: {consultation.get('edad', 'N/A')}
+            - Peso: {consultation.get('peso', 'N/A')}
+            - Detalle previo: {consultation.get('detalle_paciente', 'N/A')}
+            """
+            if consultation.get('ai_analysis'):
+                patient_history += f"\n**Análisis Previo:**\n{consultation.get('ai_analysis')}"
+    
+    # Get previous consultations for this patient if patient_id provided
+    if request.patient_id:
+        prev_consultations = await db.consultations.find(
+            {"nombre_mascota": request.patient_name}
+        ).sort("created_at", -1).limit(3).to_list(length=3)
+        
+        if prev_consultations:
+            patient_history += "\n\n**Historial de Consultas Previas:**\n"
+            for i, cons in enumerate(prev_consultations, 1):
+                patient_history += f"\n{i}. Fecha: {cons.get('fecha', 'N/A')}"
+                patient_history += f"\n   Motivo: {cons.get('detalle_paciente', 'N/A')[:100]}..."
+                if cons.get('ai_analysis'):
+                    patient_history += f"\n   Diagnóstico: {cons.get('ai_analysis', '')[:150]}..."
+    
+    # Prepare specialized prompt based on image type
+    image_type_prompts = {
+        "xray": """Eres un veterinario radiólogo experto. Analiza esta radiografía veterinaria y proporciona:
+1. Hallazgos radiológicos principales
+2. Posibles diagnósticos diferenciales
+3. Recomendaciones de estudios adicionales si son necesarios
+4. Interpretación detallada de estructuras anatómicas visibles
+5. Áreas de preocupación o anormalidades""",
+        
+        "blood_test": """Eres un veterinario especialista en patología clínica. Analiza estos resultados de análisis de sangre y proporciona:
+1. Valores fuera de rango y su significado clínico
+2. Posibles condiciones o enfermedades indicadas
+3. Recomendaciones de manejo
+4. Interpretación de patrones hematológicos o bioquímicos
+5. Pruebas adicionales sugeridas si son necesarias""",
+        
+        "urinalysis": """Eres un veterinario especialista en nefrología y urología. Analiza estos resultados de urianálisis y proporciona:
+1. Hallazgos anormales y su interpretación
+2. Posibles condiciones del tracto urinario o sistémicas
+3. Recomendaciones de tratamiento o estudios adicionales
+4. Evaluación de función renal
+5. Consideraciones de manejo"""
+    }
+    
+    base_prompt = image_type_prompts.get(request.image_type, image_type_prompts["xray"])
+    
+    full_prompt = f"""{base_prompt}
+
+{patient_history}
+
+{f'Contexto adicional del veterinario: {request.additional_context}' if request.additional_context else ''}
+
+Por favor, estructura tu respuesta en las siguientes secciones:
+
+**HALLAZGOS PRINCIPALES:**
+(Lista concisa de los hallazgos más importantes)
+
+**DIAGNÓSTICOS DIFERENCIALES:**
+(Posibles diagnósticos basados en los hallazgos)
+
+**ANÁLISIS DETALLADO:**
+(Interpretación completa y técnica de la imagen/resultados)
+
+**RECOMENDACIONES:**
+(Plan de acción, estudios adicionales, tratamiento sugerido)
+
+Usa tu experiencia clínica y conocimiento médico veterinario para proporcionar una interpretación precisa y útil."""
+    
+    try:
+        # Initialize LLM chat with vision capabilities
+        from emergentintegrations.llm.chat import ImageContent
+        
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="Eres un veterinario especialista con experiencia en diagnóstico por imágenes y análisis de laboratorio. Proporciona interpretaciones precisas, profesionales y basadas en evidencia."
+        ).with_model("anthropic", "claude-sonnet-4-20250514")
+        
+        # Create image content
+        image_content = ImageContent(image_base64=request.image_base64)
+        
+        # Create message with image
+        user_message = UserMessage(
+            text=full_prompt,
+            file_contents=[image_content]
+        )
+        
+        # Get AI interpretation
+        response = await chat.send_message(user_message)
+        
+        # Parse response into sections
+        response_text = response if isinstance(response, str) else str(response)
+        
+        # Extract sections (simplified parsing)
+        findings = ""
+        recommendations = ""
+        detailed_analysis = response_text
+        
+        if "**HALLAZGOS PRINCIPALES:**" in response_text:
+            parts = response_text.split("**HALLAZGOS PRINCIPALES:**")
+            if len(parts) > 1:
+                findings_part = parts[1].split("**DIAGNÓSTICOS DIFERENCIALES:**")[0] if "**DIAGNÓSTICOS DIFERENCIALES:**" in parts[1] else parts[1].split("**ANÁLISIS DETALLADO:**")[0] if "**ANÁLISIS DETALLADO:**" in parts[1] else parts[1]
+                findings = findings_part.strip()
+        
+        if "**RECOMENDACIONES:**" in response_text:
+            parts = response_text.split("**RECOMENDACIONES:**")
+            if len(parts) > 1:
+                recommendations = parts[1].strip()
+        
+        # Create interpretation record
+        interpretation_id = str(uuid.uuid4())
+        interpretation_data = {
+            "id": interpretation_id,
+            "veterinarian_id": request.veterinarian_id,
+            "image_type": request.image_type,
+            "patient_name": request.patient_name,
+            "patient_id": request.patient_id,
+            "consultation_id": request.consultation_id,
+            "findings": findings,
+            "recommendations": recommendations,
+            "detailed_analysis": detailed_analysis,
+            "additional_context": request.additional_context,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        # Save to database (without image for privacy)
+        await db.image_interpretations.insert_one(interpretation_data)
+        
+        return ImageInterpretationResponse(**interpretation_data)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al interpretar imagen: {str(e)}")
+
+@app.get("/api/medical-images/history/{vet_id}")
+async def get_interpretation_history(vet_id: str):
+    """Get interpretation history for veterinarian"""
+    interpretations = await db.image_interpretations.find(
+        {"veterinarian_id": vet_id}
+    ).sort("created_at", -1).to_list(length=None)
+    
+    return {"interpretations": interpretations}
+
 # Payment endpoints
 @app.get("/api/membership/packages")
 async def get_membership_packages():
