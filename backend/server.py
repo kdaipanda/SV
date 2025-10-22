@@ -463,7 +463,7 @@ async def search_consultations(vet_id: str, query: str):
         "$or": [
             {"consultation_number": {"$regex": query, "$options": "i"}},
             {"nombre_mascota": {"$regex": query, "$options": "i"}},
-            {"nombre_dueno": {"$regex": query, "$options": "i"}},
+            {"nombre_dueño": {"$regex": query, "$options": "i"}},
             {"raza": {"$regex": query, "$options": "i"}}
         ]
     }
