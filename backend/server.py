@@ -1,5 +1,6 @@
 import os
 import uuid
+import logging
 from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
 from dotenv import load_dotenv
@@ -9,6 +10,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # Load environment variables
 load_dotenv()
 
@@ -16,23 +24,42 @@ load_dotenv()
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
 
-app = FastAPI()
+app = FastAPI(
+    title="Savant Vet API",
+    description="API para consultas veterinarias especializadas con IA",
+    version="1.0.0"
+)
 
-# CORS middleware
+# Improved CORS configuration
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+logger.info(f"CORS configured for origins: {allowed_origins}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,  # Cache preflight requests for 1 hour
 )
 
 # Database setup
-client = AsyncIOMotorClient(os.getenv("MONGO_URL"))
-db = client[os.getenv("DB_NAME", "vetmed_platform")]
+MONGO_URL = os.getenv("MONGO_URL")
+DB_NAME = os.getenv("DB_NAME", "savant_vet_db")
+
+if not MONGO_URL:
+    logger.error("MONGO_URL not configured")
+    raise ValueError("MONGO_URL environment variable is required")
+
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
+logger.info(f"Connected to MongoDB database: {DB_NAME}")
 
 # LLM Configuration
 EMERGENT_LLM_KEY = os.getenv("EMERGENT_LLM_KEY")
+if not EMERGENT_LLM_KEY:
+    logger.warning("EMERGENT_LLM_KEY not configured - AI features will not work")
 STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 
 # Membership packages (server-side only for security)
