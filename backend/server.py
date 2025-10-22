@@ -283,6 +283,7 @@ async def root():
 @app.post("/api/auth/register", response_model=Veterinarian)
 async def register_veterinarian(registration: VeterinarianRegistration):
     """Register a new veterinarian"""
+    logger.info(f"Registration attempt for email: {registration.email}")
     
     # Check if email or cedula already exists
     existing = await db.veterinarians.find_one({
@@ -293,14 +294,17 @@ async def register_veterinarian(registration: VeterinarianRegistration):
     })
     
     if existing:
+        logger.warning(f"Registration failed - duplicate credentials: {registration.email}")
         raise HTTPException(status_code=400, detail="Email o cédula profesional ya registrados")
     
     # Validate Mexican veterinary license format (basic validation)
     if not registration.cedula_profesional.isdigit() or len(registration.cedula_profesional) < 6:
+        logger.warning(f"Registration failed - invalid cedula format: {registration.cedula_profesional}")
         raise HTTPException(status_code=400, detail="Formato de cédula profesional inválido")
     
     vet_data = prepare_for_mongo(registration.dict())
     await db.veterinarians.insert_one(vet_data)
+    logger.info(f"New veterinarian registered successfully: {registration.email}")
     
     return Veterinarian(**vet_data)
 
