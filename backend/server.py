@@ -311,14 +311,18 @@ async def register_veterinarian(registration: VeterinarianRegistration):
 @app.post("/api/auth/login", response_model=Veterinarian)
 async def login_veterinarian(login_request: LoginRequest):
     """Login veterinarian"""
+    logger.info(f"Login attempt for email: {login_request.email}")
+    
     vet = await db.veterinarians.find_one({
         "email": login_request.email,
         "cedula_profesional": login_request.cedula_profesional
     })
     
     if not vet:
+        logger.warning(f"Login failed - invalid credentials: {login_request.email}")
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
     
+    logger.info(f"Login successful: {login_request.email}")
     return Veterinarian(**vet)
 
 @app.get("/api/veterinarians/{vet_id}", response_model=Veterinarian)
