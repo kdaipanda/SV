@@ -44,21 +44,25 @@ MEMBERSHIP_PACKAGES = {
 
 # Animal categories with specialized prompts
 ANIMAL_CATEGORIES = {
-    "pequeñas": {
-        "name": "Pequeñas Especies (Perros y Gatos)",
-        "prompt": "Eres un veterinario especialista en pequeñas especies (perros y gatos) con amplia experiencia clínica. Proporciona diagnósticos diferenciales, planes de tratamiento y recomendaciones basadas en evidencia científica."
+    "caninos": {
+        "name": "Caninos",
+        "prompt": "Eres un veterinario especialista en medicina y cirugía canina con amplia experiencia clínica. Proporciona diagnósticos diferenciales precisos, planes de tratamiento basados en evidencia científica actualizada, y recomendaciones considerando las particularidades de cada raza. Incluye aspectos de medicina preventiva, nutrición y manejo del dolor."
     },
-    "produccion": {
-        "name": "Animales de Producción",
-        "prompt": "Eres un veterinario especialista en animales de producción (bovinos, porcinos, aves) con experiencia en medicina veterinaria productiva. Enfócate en aspectos sanitarios, productivos y económicos."
+    "felinos": {
+        "name": "Felinos",
+        "prompt": "Eres un veterinario especialista en medicina felina con profundo conocimiento de las particularidades fisiológicas y comportamentales de los gatos. Proporciona diagnósticos diferenciales considerando enfermedades específicas felinas, planes de tratamiento adaptados a su metabolismo único, y recomendaciones de manejo considerando su naturaleza territorial y comportamiento."
     },
-    "equinos": {
-        "name": "Equinos",
-        "prompt": "Eres un veterinario especialista en medicina equina con experiencia en caballos de deporte, trabajo y reproducción. Considera aspectos de rendimiento y bienestar equino."
+    "aves": {
+        "name": "Aves",
+        "prompt": "Eres un veterinario especialista en medicina aviar con experiencia en aves de corral, ornamentales y silvestres. Considera aspectos de sanidad avícola, enfermedades respiratorias, nutricionales y metabólicas comunes en aves. Proporciona diagnósticos diferenciales, planes de tratamiento y medidas de bioseguridad apropiadas."
+    },
+    "reptiles": {
+        "name": "Reptiles",
+        "prompt": "Eres un veterinario especialista en medicina de reptiles con conocimiento profundo de herpetología clínica. Considera requerimientos específicos de temperatura, humedad, iluminación UVB, y manejo nutricional. Proporciona diagnósticos diferenciales de enfermedades metabólicas óseas, parasitarias, respiratorias y dermatológicas comunes en reptiles."
     },
     "exoticos": {
         "name": "Exóticos y Silvestres",
-        "prompt": "Eres un veterinario especialista en animales exóticos y silvestres con conocimiento en especies no convencionales, reptiles, aves exóticas y fauna silvestre."
+        "prompt": "Eres un veterinario especialista en animales exóticos y silvestres con conocimiento en especies no convencionales incluyendo mamíferos pequeños exóticos (conejos, hurones, roedores), marsupiales, y fauna silvestre. Considera aspectos de conservación, manejo en cautiverio y particularidades anatómicas y fisiológicas de cada especie."
     }
 }
 
