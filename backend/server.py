@@ -350,12 +350,14 @@ async def generate_consultation_number(vet_id: str):
 @app.post("/api/consultations", response_model=ConsultationData)
 async def create_consultation(consultation_request: ConsultationRequest):
     """Create a new consultation (Stage 1: Initial questionnaire)"""
+    logger.info(f"Creating consultation for vet: {consultation_request.veterinarian_id}, category: {consultation_request.category}")
     
     # Verify veterinarian membership
     await verify_veterinarian_membership(consultation_request.veterinarian_id)
     
     # Generate consultation number
     consultation_number = await generate_consultation_number(consultation_request.veterinarian_id)
+    logger.info(f"Generated consultation number: {consultation_number}")
     
     consultation = ConsultationData(
         veterinarian_id=consultation_request.veterinarian_id,
@@ -366,6 +368,7 @@ async def create_consultation(consultation_request: ConsultationRequest):
     
     consultation_data = prepare_for_mongo(consultation.dict())
     await db.consultations.insert_one(consultation_data)
+    logger.info(f"Consultation created successfully: {consultation_number}")
     
     # Return without MongoDB's _id field
     return ConsultationData(**consultation.dict())
