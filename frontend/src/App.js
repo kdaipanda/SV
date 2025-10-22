@@ -2289,7 +2289,7 @@ const ConsultationHistory = ({ setView }) => {
                   <strong>Nombre:</strong> {selectedConsultation.nombre_mascota}
                 </div>
                 <div className="detail-item">
-                  <strong>Propietario:</strong> {selectedConsultation.nombre_dueno}
+                  <strong>Propietario:</strong> {selectedConsultation.nombre_dueño}
                 </div>
                 <div className="detail-item">
                   <strong>Raza:</strong> {selectedConsultation.raza}
@@ -2395,7 +2395,7 @@ const ConsultationHistory = ({ setView }) => {
                 
                 <div className="consultation-content">
                   <div className="detail-row">
-                    <strong>Propietario:</strong> {consultation.nombre_dueno || 'No especificado'}
+                    <strong>Propietario:</strong> {consultation.nombre_dueño || 'No especificado'}
                   </div>
                   <div className="detail-row">
                     <strong>Raza:</strong> {consultation.raza || 'No especificada'}
