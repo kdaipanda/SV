@@ -40,10 +40,18 @@ jobs:
           # Check for requirements.txt in backend or root
           if [ -f backend/requirements.txt ]; then
             pip install -r backend/requirements.txt
-            pytest backend_test.py -v || pytest backend/ -v || true
+            if [ -f backend_test.py ]; then
+              pytest backend_test.py -v
+            elif [ -d backend ]; then
+              pytest backend/ -v
+            fi
           elif [ -f requirements.txt ]; then
             pip install -r requirements.txt
-            pytest backend_test.py -v || pytest -v || true
+            if [ -f backend_test.py ]; then
+              pytest backend_test.py -v
+            else
+              pytest -v
+            fi
           else
             echo "No requirements.txt found, skipping backend tests"
           fi
