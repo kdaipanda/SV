@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import './App.css';
 import './Custom.css';
+import NuevaConsultaAnimal from './pages/NuevaConsultaAnimal';
 
 // Context for veterinarian authentication
 const VetContext = createContext();
@@ -84,6 +85,7 @@ const Router = () => {
     'login': <LoginPage setView={setCurrentView} />,
     'dashboard': <Dashboard setView={setCurrentView} />,
     'new-consultation': <NewConsultation setView={setCurrentView} />,
+    'nueva-consulta-animal': <NuevaConsultaAnimal setView={setCurrentView} />,
     'consultation-history': <ConsultationHistory setView={setCurrentView} />,
     'medical-images': <MedicalImageInterpretation setView={setCurrentView} />,
     'membership': <MembershipPage setView={setCurrentView} />,
